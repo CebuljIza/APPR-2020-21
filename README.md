@@ -18,7 +18,7 @@ Izračunan je glede na podatke o:
 * izobrazbi (indeks izobrazbe, EI) in 
 * dohodku per capita (BNDpc po pariteti kupne moči, II). 
 
-HDI je geometrijsko povprečje teh treh komponent: $$HDI = \sqrt[3]{LEI * EI * II}$$.
+HDI je geometrijsko povprečje teh treh komponent: $HDI = \sqrt[3]{LEI * EI * II}$.
 
 Kljub temu pa indeks predstavlja nekaj problemov:
 * Življenjska doba ima enako težo - ali to pomeni, da ima življenje denarno vrednost?
@@ -37,7 +37,7 @@ Podatkovne vire sem zbrala v mapi podatki. So v obliki CSV datotek, ki sem jih p
   * neenakost med prebivalci v zdravju, izobrazbi in prihodku (tabela [coefficient_of_human_inequality.csv](podatki/coefficient_of_human_inequality.csv))
   * odziv in soočanje z novim koronavirusom glede na celotno število primerov (tabela [WHO-COVID-19-global-data.csv](podatki/WHO-COVID-19-global-data.csv)), tu bi s pomočjo tabele [celotnega prebivalstva](podatki/WPP2019_TotalPopulationBySex.csv) izračunala delež primerov (ali smrti) glede na celotno prebivalstvo
   
-  * Za vsako od novih spremenljivk bi naredila tabelo, ki izračuna indeks, ki ga bom potem uporabila pri računanju drugačnega HDI: $$INDEX = 1 - ((vrednost - vrednost_{max}) / vrednost_{max} - vrednost_{min}) $$. Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
+  * Za vsako od novih spremenljivk bi naredila tabelo, ki izračuna indeks, ki ga bom potem uporabila pri računanju drugačnega HDI: $INDEX = 1 - ((vrednost - vrednost_{max}) / vrednost_{max} - vrednost_{min})$. Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
   
   * Potem bi izračunala geometrijsko sredino različnih kombinacij teh šestih spremenljivk in podatke primerjala med sabo, da bi ugotovila, kako nove spremenljivke vplivajo na indeks človekovega razvoja. 
   
