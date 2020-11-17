@@ -46,8 +46,6 @@ Analizirala bom **človekov razvoj v času**, kdaj je rastel/padal, kdaj je kak�
 
 Dodala bom še analizo **razvoja držav po celinah**, katera celina je najbolj razvita in kako se bodo v povprečju manj razvite (Južna Amerika, Afrika, Azija) razvijale v prihodnosti.
 
-Primerjala bom še **Slovenijo s svetovnim povprečjem**, v kateri komponenti naš HDI najbolj odstopa in kaj nam indeks obeta v prihodnosti.
-
 Izračunala bom **nov HDI**, ki bo upošteval spremenljivke, povezane z ekologijo, neenakostjo in odzivom na COVID-19, saj so to trenutno zelo pomembni indikatorji za razvitost držav, ki pa jih HDI še ne upošteva.
 
 Cilj projekta je dobiti vpogled v razvoj sveta glede na čas, države in celine ter pokazati, da kljub temu, da je trenutno najbolj dopolnjeno merilo, indeks človekovega razvoja vseeno ni najboljši kriterij. Izboljšati se ga da z dodajanjem novih spremenljivk, ki tudi vplivajo na človekov razvoj. 
