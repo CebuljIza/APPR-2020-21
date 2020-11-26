@@ -21,7 +21,7 @@ Izračunan je glede na podatke o:
 HDI je geometrijsko povprečje teh treh komponent: <img src="https://render.githubusercontent.com/render/math?math=HDI = \sqrt[3]{LEI * EI * II}">
 
 Kljub temu pa indeks predstavlja nekaj problemov:
-* Življenjska doba ima enako težo - ali to pomeni, da ima življenje denarno vrednost?
+* Življenjska doba ima enako težo kot dohodek - ali to pomeni, da ima življenje denarno vrednost?
 * Ne upošteva revščine oz. ekonomske neenakosti znotraj države ali neenakosti med spoloma.
 * Visok HDI je tesno povezan z visokim ekološkim odtisom, kar pa za razvoj gospodarstva in kvaliteto življenja v prihodnosti ni dobro.
 
