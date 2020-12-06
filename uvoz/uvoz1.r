@@ -69,10 +69,11 @@ prihodek <- uvozi.csv("podatki/income_index.csv", st.ii, 2, 191) %>%
 
 ## 5. tabela (Coefficient of human inequality)
 st.ineq <- c("HDI Rank (2018)","Drzava","2010","","2011","","2012","","2013","","2014","","2015","","2016","","2017","","2018","")
-neenakost <- uvozi.csv("podatki/coefficient_of_human_inequality.csv", st.ineq, 2, 189)
+neenakost <- uvozi.csv("podatki/coefficient_of_human_inequality.csv", st.ineq, 2, 189) %>%
+  rename("Koeficient" = "Indeks")
 
 ### nov stolpec - Indeks neenakosti
-neenakost$"Indeks neenakosti" <- round(1 - ((neenakost$Stevilo - min(neenakost$Stevilo, na.rm = TRUE) + 0.01)/(max(neenakost$Stevilo, na.rm = TRUE) - min(neenakost$Stevilo, na.rm = TRUE))), digits = 2)
+neenakost$"Indeks neenakosti" <- round(1 - ((neenakost$Koeficient - min(neenakost$Koeficient, na.rm = TRUE) + 0.01)/(max(neenakost$Koeficient, na.rm = TRUE) - min(neenakost$Koeficient, na.rm = TRUE))), digits = 2)
 
 # Funkcija za uvoz datoteke 'co2 emissions'
 uvozi.co2.csv <- function(tabela, stolpci, skip, max) {
@@ -160,7 +161,8 @@ covid[covid$Drzava == "United States of America",]$Drzava <- "United States"
 
 skupaj <- left_join(covid,prebivalstvo,by = "Drzava")
 skupaj <- skupaj %>%
-  drop_na()
+  drop_na() %>%
+  select(-"Datum")
 
 ### nov stolpec
 skupaj$"Stevilo smrti na 1000 prebivalcev" <- round(((skupaj$"Stevilo smrti" / skupaj$"Prebivalstvo") * 1000), digits = 2)
@@ -176,23 +178,12 @@ nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
   left_join(., skupaj, by="Drzava") %>%
   select("Drzava", "Indeks izobrazbe", "Indeks zivljenja", "Indeks prihodka", "Indeks neenakosti", "Ekoloski indeks", "Indeks COVID")
 
+#### popravim tabelo za računanje tam, kjer so vrednosti indeksov 0 ali na
+nov.hdi[nov.hdi$Drzava == "Comoros",]$"Indeks neenakosti" <- 0.01
+nov.hdi[nov.hdi$Drzava == "Qatar",]$"Ekoloski indeks" <- 0.01
+nov.hdi[nov.hdi$Drzava == "Belgium",]$"Indeks COVID" <- 0.01
+nov.hdi[is.na(nov.hdi)] <- 0.01
 
-# Ne vem še, če bom potrebovala
-# Funkcija za uvoz datoteke 'countries by continents'
-uvozi.cont.csv <- function(tabela, stolpci, skip, max) {
-  uvoz <- read_csv(tabela,
-                   locale = locale(encoding="utf-8"),
-                   col_names = stolpci,
-                   skip = skip,
-                   n_max = max,
-                   na = c("", " ", "-", ".."))
-  uvoz <- uvoz %>% select("Celina", "Drzava")
-  
-  uvoz$Drzava <- str_replace(uvoz$Drzava, ",.*", "")
-  uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\(.*?\\) *", "")
-  return(uvoz)
-}
-
-## 11. tabela (Države po celinah)
-st.cont <- c("Celina","Continent_Code","Drzava","Two_Letter_Country_Code","Three_Letter_Country_Code","Country_Number")
-celine <- uvozi.cont.csv("podatki/countries_by_continents.csv", st.cont, 1, Inf)
+### nova stolpca za star in nov HDI
+nov.hdi$"Stari HDI" <- round((nov.hdi$`Indeks izobrazbe` * nov.hdi$`Indeks zivljenja` * nov.hdi$`Indeks prihodka`) ** (1/3), digits = 2)
+nov.hdi$"Novi HDI" <- round((nov.hdi$`Indeks izobrazbe` * nov.hdi$`Indeks zivljenja` * nov.hdi$`Indeks prihodka` * nov.hdi$`Indeks neenakosti` * nov.hdi$`Ekoloski indeks` * nov.hdi$`Indeks COVID`) ** (1/6), digits = 2)

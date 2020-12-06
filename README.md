@@ -20,35 +20,29 @@ Izračunan je glede na podatke o:
 
 HDI je geometrijsko povprečje teh treh komponent: <img src="https://render.githubusercontent.com/render/math?math=HDI = \sqrt[3]{LEI * EI * II}">
 
-Kljub temu pa indeks predstavlja nekaj problemov:
-* Življenjska doba ima enako težo kot dohodek - ali to pomeni, da ima življenje denarno vrednost?
-* Ne upošteva revščine oz. ekonomske neenakosti znotraj države ali neenakosti med spoloma.
-* Visok HDI je tesno povezan z visokim ekološkim odtisom, kar pa za razvoj gospodarstva in kvaliteto življenja v prihodnosti ni dobro.
+Kljub temu pa indeks predstavlja nekaj problemov, saj ne upošteva revščine oz. ekonomske neenakosti znotraj države ali neenakosti med spoloma, visok HDI pa je tudi tesno povezan z visokim ekološkim odtisom, kar pa za razvoj gospodarstva in kvaliteto življenja v prihodnosti ni dobro.
 
 ##### Podatkovni viri
 Podatkovne vire sem zbrala v mapi **podatki**. So v obliki CSV datotek, ki sem jih pridobila s spletnih strani [Razvojnega programa Združenih narodov](http://hdr.undp.org/en/data#), [Our World in Data](https://ourworldindata.org/co2-emissions) in [Svetovne zdravstvene organizacije](https://covid19.who.int/table).
 
 ##### Podatkovno delo
-* **analiza HDI** (podatki v tabeli [HDI_countries_years.csv](podatki/HDI_countries_years.csv)) po letih in po celinah (podatki v tabeli [countries_by_continents.csv](podatki/countries_by_continents.csv))
-  * nova tabela, ki združi zgornji dve v eno glede na celine in njihov HDI
+* **analiza HDI** (podatki v tabeli [HDI_countries_years.csv](podatki/HDI_countries_years.csv)) po letih
   * izris zemljevidov
-* **problematizacija HDI** - izračunala bi drugačen indeks HDI, ki bi vključeval še druge spremenljivke, ki kažejo na dobro razvito državo:
+* **problematizacija HDI** - izračunala bi nov indeks HDI, ki bi vključeval še druge spremenljivke, ki kažejo na dobro razvito državo:
   * izpust ogljikovega dioksida v tonah, per capita (tabela [co2_emissions_per_capita.csv](podatki/co2_emissions_per_capita.csv))
   * neenakost med prebivalci v zdravju, izobrazbi in prihodku (tabela [coefficient_of_human_inequality.csv](podatki/coefficient_of_human_inequality.csv))
   * odziv in soočanje z novim koronavirusom glede na celotno število primerov (tabela [WHO-COVID-19-global-data.csv](podatki/WHO-COVID-19-global-data.csv)), tu bi s pomočjo tabele [celotnega prebivalstva](podatki/WPP2019_TotalPopulationBySex.csv) izračunala delež primerov (ali smrti) glede na celotno prebivalstvo
   
-Za vsako od novih spremenljivk bom naredila tabelo, ki izračuna indeks, ki ga bom potem uporabila pri računanju drugačnega HDI: <img src="https://render.githubusercontent.com/render/math?math=INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}">. Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
+Za vsako od novih spremenljivk bom izračunala indeks, ki ga bom potem uporabila pri računanju novega HDI: <img src="https://render.githubusercontent.com/render/math?math=INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}">. Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
   
-Potem bom izračunala geometrijsko sredino različnih kombinacij teh šestih spremenljivk in podatke primerjala med sabo, da bi ugotovila, kako nove spremenljivke vplivajo na indeks človekovega razvoja. 
+Potem bom izračunala geometrijsko sredino šestih indeksov in primerjala nov HDI s starim, da bom ugotovila, kako nove spremenljivke vplivajo na indeks človekovega razvoja. 
   
 ##### Analiza podatkov in cilj projekta
-Analizirala bom **človekov razvoj v času**, kdaj je rastel/padal, kdaj je kakšna država po razvoju prehitela druge ter kako so na indeks vplivali takratni dogodki (krize, vojne, bolezni, tehnološki napredek). 
-
-Dodala bom še analizo **razvoja držav po celinah**, katera celina je najbolj razvita in kako se bodo v povprečju manj razvite (Južna Amerika, Afrika, Azija) razvijale v prihodnosti.
+Analizirala bom **človekov razvoj zadnjih 20 let**, kdaj je rastel/padal, kdaj je kakšna država po razvoju prehitela druge ter kako so na indeks vplivali takratni dogodki (krize, vojne, bolezni, tehnološki napredek). 
 
 Izračunala bom **nov HDI**, ki bo upošteval spremenljivke, povezane z ekologijo, neenakostjo in odzivom na COVID-19, saj so to trenutno zelo pomembni indikatorji za razvitost držav, ki pa jih HDI še ne upošteva.
 
-Cilj projekta je dobiti vpogled v razvoj sveta glede na čas, države in celine ter pokazati, da kljub temu, da je trenutno najbolj dopolnjeno merilo, indeks človekovega razvoja vseeno ni najboljši kriterij. Izboljšati se ga da z dodajanjem novih spremenljivk, ki tudi vplivajo na človekov razvoj. 
+Cilj projekta je dobiti vpogled v razvoj sveta glede na čas in države ter pokazati, da kljub temu, da je trenutno najbolj dopolnjeno merilo, indeks človekovega razvoja vseeno ni najboljši kriterij. Izboljšati se ga da z dodajanjem novih spremenljivk, ki prav tako vplivajo na človekov razvoj. 
 
 ## Program
 

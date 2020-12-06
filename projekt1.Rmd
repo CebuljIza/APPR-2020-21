@@ -1,0 +1,133 @@
+---
+title: "Poročilo pri predmetu Analiza podatkov s programom R"
+author: "Iza Čebulj"
+output:
+  html_document: default
+  pdf_document:
+    includes:
+      in_header: lib/styles.sty
+    latex_engine: xelatex
+runtime: shiny
+---
+
+```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+
+# Uvoz vseh potrebnih knjižnic
+source("lib/libraries.r", encoding="UTF-8")
+```
+
+```{r rstudio, results='asis'}
+# Izris povezave do RStudia na Binderju
+source("lib/rstudio.r", encoding="UTF-8")
+```
+
+# Tema projekta
+
+Za projekt sem si izbrala analizo indeksa človekovega razvoja (ang. human development index), ki je eden glavnih pokazateljev blaginje v državi. Indeks je izračunan na podlagi treh komponent: indeksa izobrazbe (pismenost), indeksa pričakovane življenjske dobe in indeksa dohodka (bruto nacionalni dohodek per capita). 
+
+Kljub temu, da je to zelo napreden indikator blagostanja v državi, ima nekatere pomankljivosti, saj ne upošteva: 
+
+- **neenakosti v državi** - država je lahko relativno bogata zaradi nekaj posameznikov, medtem ko preostanek prebivalstva živi v revščini,
+- **ekološkega odtisa** - analiza je pokazala, da imajo države z visokim HDI tudi zelo visok izpust ogljikovega dioksida, kar pa nikakor ni dobro za razvoj in blagostanje v prihodnosti in 
+- **stanja zdravstvenega sistema**, ki se je v času pandemije koronavirusa izkazal za zelo dobrega pokazatelja gospodarskega napredka države.
+
+Poleg analize HDI zadnjih 20 let po državah, bom v projektu izračunala tudi novi HDI, ki bo upošteval tudi neenakost med prebivalci, izpuste CO2 in COVID smrti na prebivalca.
+
+### Podatkovni viri
+
+Podatkovne vire sem pridobila s spletnih strani:
+
++ [Razvojni program Združenih narodov](http://hdr.undp.org/en/data#)
+  - [HDI po državah in v letih](podatki/HDI_countries_years.csv)
+  - [Indeks izobrazbe](podatki/education_index.csv)
+  - [Indeks življenja](podatki/life_expectancy_index.csv)
+  - [Indeks dohodka](podatki/income_index.csv)
+  - [Koeficient neenakosti](podatki/coefficient_of_human_inequality.csv)
++ [Our World in Data](https://ourworldindata.org/co2-emissions)
+  - [Izpusti CO2, v tonah na prebivalca](podatki/co2_emissions_per_capita.csv)
++ [Svetovna zdravstvena organizacija](https://covid19.who.int/table)
+  - [Smrti COVID](podatki/WHO-COVID-19-global-data.csv)
++ [Wikipedija](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population)
+
+# Obdelava, uvoz in čiščenje podatkov
+
+```{r uvoz}
+source("uvoz/uvoz1.r", encoding="UTF-8")
+```
+
+Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*. 
+
+1. `HDI_drzave_leta` - podatki o HDI po državah v letih 1998-2018
+  - `Drzava` - ime države
+  - `Leto` - leto, v katerem je bil merjen HDI
+  - `Stevilo` - indeks človekovega razvoja
+2. `izobrazba` - podatki o indeksu izobrazbe, izračunanem glede na stopnjo pismenosti in povprečna leta šolanja
+  - `Drzava` - ime države
+  - `Indeks izobrazbe` - indeks izobrazbe v državi
+3. `zivljenje` - podatki o indeksu pričakovane življenske dobe
+  - `Drzava` - ime države
+  - `Indeks zivljenja` - indeks pričakovane življenjske dobe
+4. `prihodek` - podatki o indeksu dohodka, izračunanem glede na bruto nacionalni dohodek per capita
+  - `Drzava` - ime države
+  - `Indeks prihodka` - indeks prihodka v državi
+5. `neenakost` - podatki o neenakosti v izobrazbi, zdravju in prihodku med državljani
+  - `Drzava` - ime države
+  - `Koeficient` - koeficient neenakosti, ki ga je izračunal Razvojni program združenih narodov
+  - `Indeks neenakosti` - indeks, izračunan glede na koeficient po formuli, podani spodaj
+6. `izpusti` - podatki o izpustih ogljikovega dioksida
+  - `Drzava` - ime države
+  - `CO2 izpust per capita` - CO2 izpust v tonah na prebivalca
+  - `Ekoloski indeks` - indeks, izračunan glede na izpust po formuli, podani spodaj
+7. `covid` - podatki o številu smrti, katerih vzrok je bil COVID-19
+  - `Datum` - datum, na katerega so bile seštete smrti
+  - `Drzava` - ime države
+  - `Stevilo smrti` - število smrti za državo, kumulativno, na podan datum
+8. `prebivalstvo` - podatki o prebivalstvu po državah
+  - `Drzava` - ime države
+  - `Prebivalstvo` - število prebivalcev v državi
+9. `skupaj` - Število COVID smrti na prebivalca - združimo tabeli covid in prebivalstvo
+  - `Drzava` - ime države
+  - `Stevilo smrti` - število smrti za državo, kumulativno
+  - `Prebivalstvo` - število prebivalcev v državi
+  - `Stevilo smrti na 1000 prebivalcev` - število smrti na 1000 prebivalcev
+  - `Indeks COVID` - indeks, izračunan glede na število smrti po formuli, podani spodaj
+10. `nov.hdi` - tabela s šestimi indeksi in izračunanima starim in novim HDI-jem
+  - `Drzava` - ime države
+  - `Indeks izobrazbe` - indeks izobrazbe v državi
+  - `Indeks zivljenja` - indeks pričakovane življenjske dobe
+  - `Indeks prihodka` - indeks prihodka v državi
+  - `Indeks neenakosti` - indeks, izračunan glede na koeficient neenakosti
+  - `Ekoloski indeks` - indeks, izračunan glede na izpust
+  - `Indeks COVID` - indeks, izračunan glede na število smrti po formuli, podani spodaj
+  - `Stari HDI` - indeks človekovega razvoja, izračunan kot geometrijsko povprečje prvih treh indeksov
+  - `Novi HDI` - nov indeks človekovega razvoja, izračunan kot geometrijsko povprečje vseh šestih indeksov
+  
+**Formula za izračun indeksov neenakosti, izpustov in COVID smrti:**
+$$INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}$$
+Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
+
+## Preliminarna analiza
+Za analizo bom uporabljala samo prečiščeni tabeli [HDI-drzave-leta](podatki/preciscene-tabele/HDI-drzave-leta.csv) in [nov-hdi](podatki/preciscene-tabele/nov-hdi.csv). 
+
+#### Analiza indeksa človekovega razvoja
+V prvem delu analize bom analizirala indeks človekovega razvoja po državah v zadnjih 20 letih. 
+
+Zanimalo me bo, kako so na HDI vplivali dogodki, kot so gospodarske krize, vojne, pandemije in tehnološki napredek ter kako se države v rasti HDI-ja primerjajo med sabo, na primer kdaj je kakšna država prehitela druge in zakaj.
+
+*vstavi Chunk*
+
+#### Novi indeks človekovega razvoja
+V drugem delu analize se bom posvetila novemu HDI in kako se ta primerja s starim. Kako nove spremenljivke v indeksu vplivajo na indeks posameznih držav.
+
+Vidimo, da se indeks večine držav zniža, prav dramatično pade pa v Belgiji, na Češkem, v Hong Kongu, Koreji, Lihtenštajnu, Siriji in Združenih Arabskih Emiratih. 
+
+Razlogi za padec so različni, pri Belgiji vidimo, da je HDI znižal indeks COVID smrti, na Češkem ekološki indeks, Sirija ima nizka tako ekološki indeks kot tudi indeks neenakosti, Hong Kong pa ima med nižjima ekološki indeks in indeks COVID smrti.
+
+Ponekod pa se indeks zviša, tudi iz različnih razlogov: Indija in Tajska imata zelo malo smrti zaradi koronavirusa, Niger pa ima nizek izpust ogljikovega dioksida.
+
+Zanimiva je nova razvrščenost držav: Norveška ohranja prvo mesto, Belgija je glede na trenutni HDI na 13. mestu razvitih držav, pri novem HDI pa jo na seznamu najdemo veliko nižje, podobno so Združene države Amerike na 18. mestu, po novem kriteriju pa šele na 79. Nasprotno se Slovenija po novem uvršča na 12. mesto, medtem ko je trenutno na 24. mestu. 
+
+*vstavi Chunk*
+
+
