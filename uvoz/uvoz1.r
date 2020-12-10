@@ -187,3 +187,10 @@ nov.hdi[is.na(nov.hdi)] <- 0.01
 ### nova stolpca za star in nov HDI
 nov.hdi$"Stari HDI" <- round((nov.hdi$`Indeks izobrazbe` * nov.hdi$`Indeks zivljenja` * nov.hdi$`Indeks prihodka`) ** (1/3), digits = 2)
 nov.hdi$"Novi HDI" <- round((nov.hdi$`Indeks izobrazbe` * nov.hdi$`Indeks zivljenja` * nov.hdi$`Indeks prihodka` * nov.hdi$`Indeks neenakosti` * nov.hdi$`Ekoloski indeks` * nov.hdi$`Indeks COVID`) ** (1/6), digits = 2)
+
+### popravki
+nov.hdi[nov.hdi$Drzava == "Korea", ]$Drzava <- "South Korea"
+DR.Congo <- data.frame("DR Congo", 0.459, 0.621, 0.314, 0.33, 0.98, 0.98, 0.46, 0.56)
+names(DR.Congo) <- c("Drzava", "Indeks izobrazbe", "Indeks zivljenja", "Indeks prihodka", "Indeks neenakosti", "Ekoloski indeks", "Indeks COVID", "Stari HDI", "Novi HDI")
+nov.hdi <- nov.hdi %>% rbind(nov.hdi, DR.Congo) %>% 
+  distinct(Drzava, .keep_all = TRUE)
