@@ -102,6 +102,11 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
   - `Indeks COVID` - indeks, izračunan glede na število smrti po formuli, podani spodaj
   - `Stari HDI` - indeks človekovega razvoja, izračunan kot geometrijsko povprečje prvih treh indeksov
   - `Novi HDI` - nov indeks človekovega razvoja, izračunan kot geometrijsko povprečje vseh šestih indeksov
+11. `nov.hdi.tidy` - tabela nov.hdi v tidy data
+  - `Drzava` - ime države
+  - `Indeks` - vrsta indeksa
+  - `Vrednost` - vrednost indeksa
+
   
 **Formula za izračun indeksov neenakosti, izpustov in COVID smrti:**
 $$INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}$$
@@ -115,7 +120,16 @@ V prvem delu analize bom analizirala indeks človekovega razvoja po državah v z
 
 Zanimalo me bo, kako so na HDI vplivali dogodki, kot so gospodarske krize, vojne, pandemije in tehnološki napredek ter kako se države v rasti HDI-ja primerjajo med sabo, na primer kdaj je kakšna država prehitela druge in zakaj.
 
-*vstavi Chunk*
+```{r}
+HDI_drzave_leta %>%
+  filter(Drzava %in% c("Slovenia", "United States", "Iceland")) %>%
+  ggplot(aes(x=Leto, y=Stevilo, color=Drzava)) + 
+  geom_line(size=2) +
+  labs(title="Primerjava rasti HDI-ja na v Sloveniji, Združenih državah Amerike in na Islandiji") +
+  ylab("Indeks") +
+  xlab("Leto")
+```
+
 
 #### Novi indeks človekovega razvoja
 V drugem delu analize se bom posvetila novemu HDI in kako se ta primerja s starim. Kako nove spremenljivke v indeksu vplivajo na indeks posameznih držav.
@@ -128,6 +142,13 @@ Ponekod pa se indeks zviša, tudi iz različnih razlogov: Indija in Tajska imata
 
 Zanimiva je nova razvrščenost držav: Norveška ohranja prvo mesto, Belgija je glede na trenutni HDI na 13. mestu razvitih držav, pri novem HDI pa jo na seznamu najdemo veliko nižje, podobno so Združene države Amerike na 18. mestu, po novem kriteriju pa šele na 79. Nasprotno se Slovenija po novem uvršča na 12. mesto, medtem ko je trenutno na 24. mestu. 
 
-*vstavi Chunk*
+```{r}
+nov.hdi.tidy %>%
+  filter(Drzava %in% c("Slovenia", "Belgium", "South Korea", "United Arab Emirates", "Lichtenstein", "India", "Niger"),
+         Indeks %in% c("Stari HDI", "Novi HDI")) %>%
+  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
+  geom_col(position="dodge")
+```
+
 
 

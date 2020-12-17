@@ -194,3 +194,6 @@ DR.Congo <- data.frame("DR Congo", 0.459, 0.621, 0.314, 0.33, 0.98, 0.98, 0.46, 
 names(DR.Congo) <- c("Drzava", "Indeks izobrazbe", "Indeks zivljenja", "Indeks prihodka", "Indeks neenakosti", "Ekoloski indeks", "Indeks COVID", "Stari HDI", "Novi HDI")
 nov.hdi <- nov.hdi %>% rbind(nov.hdi, DR.Congo) %>% 
   distinct(Drzava, .keep_all = TRUE)
+
+## 11. tabela (Tabelo nov.hdi prečistimo in spravimo v tidy data)
+nov.hdi.tidy <- nov.hdi %>% pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
