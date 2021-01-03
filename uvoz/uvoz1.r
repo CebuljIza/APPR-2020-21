@@ -108,15 +108,14 @@ uvozi.who.csv <- function(tabela, stolpci, skip, max) {
                    n_max = max,
                    na = c("", " ", "-", ".."))
   uvoz <- uvoz %>% 
-    select("Datum", "Drzava", "Stevilo smrti") %>%
-    filter(Datum == "2020-11-15")
+    select("Drzava", "Stevilo primerov")
   uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\(.*?\\) *", "")
   return(uvoz)
 }
 
 ## 7. tabela (COVID data)
-st.cov <- c("Datum", "Country_code", "Drzava", "WHO_region", "New_cases", "Cumulative_cases", "New_deaths", "Stevilo smrti")
-covid <- uvozi.who.csv("podatki/WHO-COVID-19-global-data.csv", st.cov, 1, Inf)
+st.cov <- c("Drzava","WHO Region" ,"Stevilo primerov" ,"Cases per 1 million population" ,"Cases in last 7 days","Cases in last 24 hours","Deaths - cumulative total","Deaths per 1 million population","Deaths in last 7 days","Deaths in last 24 hours","Transmission Classification")
+covid <- uvozi.who.csv("podatki/WHO-COVID-19-global-data.csv", st.cov, 2, Inf)
 
 # Uvoz iz HTML (Prebivalstvo)
 uvozi.html <- function() {
@@ -161,14 +160,13 @@ covid[covid$Drzava == "United States of America",]$Drzava <- "United States"
 
 skupaj <- left_join(covid,prebivalstvo,by = "Drzava")
 skupaj <- skupaj %>%
-  drop_na() %>%
-  select(-"Datum")
+  drop_na()
 
 ### nov stolpec
-skupaj$"Stevilo smrti na 1000 prebivalcev" <- round(((skupaj$"Stevilo smrti" / skupaj$"Prebivalstvo") * 1000), digits = 2)
+skupaj$"Stevilo primerov na 1000 prebivalcev" <- round(((skupaj$"Stevilo primerov" / skupaj$"Prebivalstvo") * 1000), digits = 2)
 
 ### nov stolpec z indeksom COVID
-skupaj$"Indeks COVID" <- round((1 - ((skupaj$"Stevilo smrti na 1000 prebivalcev" - min(skupaj$"Stevilo smrti na 1000 prebivalcev")) / (max(skupaj$"Stevilo smrti na 1000 prebivalcev") - min(skupaj$"Stevilo smrti na 1000 prebivalcev")))), digits = 2)
+skupaj$"Indeks COVID" <- round((1 - ((skupaj$"Stevilo primerov na 1000 prebivalcev" - min(skupaj$"Stevilo primerov na 1000 prebivalcev")) / (max(skupaj$"Stevilo primerov na 1000 prebivalcev") - min(skupaj$"Stevilo primerov na 1000 prebivalcev")))), digits = 2)
 
 ## 10. tabela (Združimo tabele z indeksi izobrazbe, življenja, prihodka, neenakosti, izpustov in COVIDa)
 nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
@@ -181,7 +179,7 @@ nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
 #### popravim tabelo za računanje tam, kjer so vrednosti indeksov 0 ali na
 nov.hdi[nov.hdi$Drzava == "Comoros",]$"Indeks neenakosti" <- 0.01
 nov.hdi[nov.hdi$Drzava == "Qatar",]$"Ekoloski indeks" <- 0.01
-nov.hdi[nov.hdi$Drzava == "Belgium",]$"Indeks COVID" <- 0.01
+nov.hdi[nov.hdi$Drzava == "Andorra",]$"Indeks COVID" <- 0.01
 nov.hdi[is.na(nov.hdi)] <- 0.01
 
 ### nova stolpca za star in nov HDI

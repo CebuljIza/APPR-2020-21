@@ -1,236 +1,238 @@
-"","Datum","Drzava","Stevilo smrti"
-"1",2020-11-15,"Afghanistan",1605
-"2",2020-11-15,"Albania",612
-"3",2020-11-15,"Algeria",2125
-"4",2020-11-15,"American Samoa",0
-"5",2020-11-15,"Andorra",75
-"6",2020-11-15,"Angola",322
-"7",2020-11-15,"Anguilla",0
-"8",2020-11-15,"Antigua and Barbuda",4
-"9",2020-11-15,"Argentina",35045
-"10",2020-11-15,"Armenia",1763
-"11",2020-11-15,"Aruba",43
-"12",2020-11-15,"Australia",907
-"13",2020-11-15,"Austria",1629
-"14",2020-11-15,"Azerbaijan",946
-"15",2020-11-15,"Bahamas",155
-"16",2020-11-15,"Bahrain",333
-"17",2020-11-15,"Bangladesh",6173
-"18",2020-11-15,"Barbados",7
-"19",2020-11-15,"Belarus",1039
-"20",2020-11-15,"Belgium",14399
-"21",2020-11-15,"Belize",85
-"22",2020-11-15,"Benin",43
-"23",2020-11-15,"Bermuda",9
-"24",2020-11-15,"Bhutan",0
-"25",2020-11-15,"Bolivia",8835
-"26",2020-11-15,"Bonaire, Sint Eustatius and Saba",3
-"27",2020-11-15,"Bosnia and Herzegovina",1857
-"28",2020-11-15,"Botswana",27
-"29",2020-11-15,"Brazil",164737
-"30",2020-11-15,"British Virgin Islands",1
-"31",2020-11-15,"Brunei Darussalam",3
-"32",2020-11-15,"Bulgaria",2091
-"33",2020-11-15,"Burkina Faso",68
-"34",2020-11-15,"Burundi",1
-"35",2020-11-15,"Cabo Verde",102
-"36",2020-11-15,"Cambodia",0
-"37",2020-11-15,"Cameroon",433
-"38",2020-11-15,"Canada",10828
-"39",2020-11-15,"Cayman Islands",1
-"40",2020-11-15,"Central African Republic",63
-"41",2020-11-15,"Chad",100
-"42",2020-11-15,"Chile",14777
-"43",2020-11-15,"China",4749
-"44",2020-11-15,"Colombia",33669
-"45",2020-11-15,"Comoros",7
-"46",2020-11-15,"Congo",92
-"47",2020-11-15,"Cook Islands",0
-"48",2020-11-15,"Costa Rica",1537
-"49",2020-11-15,"Côte d’Ivoire",128
-"50",2020-11-15,"Croatia",1006
-"51",2020-11-15,"Cuba",131
-"52",2020-11-15,"Curaçao",2
-"53",2020-11-15,"Cyprus",39
-"54",2020-11-15,"Czechia",6058
-"55",2020-11-15,"Democratic People's Republic of Korea",0
-"56",2020-11-15,"Democratic Republic of the Congo",318
-"57",2020-11-15,"Denmark",757
-"58",2020-11-15,"Djibouti",61
-"59",2020-11-15,"Dominica",0
-"60",2020-11-15,"Dominican Republic",2282
-"61",2020-11-15,"Ecuador",12997
-"62",2020-11-15,"Egypt",6442
-"63",2020-11-15,"El Salvador",1039
-"64",2020-11-15,"Equatorial Guinea",85
-"65",2020-11-15,"Eritrea",0
-"66",2020-11-15,"Estonia",80
-"67",2020-11-15,"Eswatini",119
-"68",2020-11-15,"Ethiopia",1565
-"69",2020-11-15,"Falkland Islands",0
-"70",2020-11-15,"Faroe Islands",0
-"71",2020-11-15,"Fiji",2
-"72",2020-11-15,"Finland",369
-"73",2020-11-15,"France",43913
-"74",2020-11-15,"French Guiana",70
-"75",2020-11-15,"French Polynesia",53
-"76",2020-11-15,"Gabon",58
-"77",2020-11-15,"Gambia",122
-"78",2020-11-15,"Georgia",703
-"79",2020-11-15,"Germany",12485
-"80",2020-11-15,"Ghana",320
-"81",2020-11-15,"Gibraltar",1
-"82",2020-11-15,"Greece",1035
-"83",2020-11-15,"Greenland",0
-"84",2020-11-15,"Grenada",0
-"85",2020-11-15,"Guadeloupe",139
-"86",2020-11-15,"Guam",93
-"87",2020-11-15,"Guatemala",3920
-"88",2020-11-15,"Guernsey",13
-"89",2020-11-15,"Guinea",74
-"90",2020-11-15,"Guinea-Bissau",43
-"91",2020-11-15,"Guyana",138
-"92",2020-11-15,"Haiti",232
-"93",2020-11-15,"Holy See",0
-"94",2020-11-15,"Honduras",2820
-"95",2020-11-15,"Hungary",3097
-"96",2020-11-15,"Iceland",25
-"97",2020-11-15,"India",129635
-"98",2020-11-15,"Indonesia",15148
-"99",2020-11-15,"Iran",41034
-"100",2020-11-15,"Iraq",11623
-"101",2020-11-15,"Ireland",1978
-"102",2020-11-15,"Isle of Man",25
-"103",2020-11-15,"Israel",2716
-"104",2020-11-15,"Italy",44683
-"105",2020-11-15,"Jamaica",229
-"106",2020-11-15,"Japan",1883
-"107",2020-11-15,"Jersey",32
-"108",2020-11-15,"Jordan",1704
-"109",2020-11-15,"Kazakhstan",2365
-"110",2020-11-15,"Kenya",1249
-"111",2020-11-15,"Kiribati",0
-"112",2020-11-15,"Kosovo[1]",799
-"113",2020-11-15,"Kuwait",835
-"114",2020-11-15,"Kyrgyzstan",1199
-"115",2020-11-15,"Lao People's Democratic Republic",0
-"116",2020-11-15,"Latvia",121
-"117",2020-11-15,"Lebanon",806
-"118",2020-11-15,"Lesotho",44
-"119",2020-11-15,"Liberia",82
-"120",2020-11-15,"Libya",995
-"121",2020-11-15,"Liechtenstein",4
-"122",2020-11-15,"Lithuania",266
-"123",2020-11-15,"Luxembourg",219
-"124",2020-11-15,"Madagascar",249
-"125",2020-11-15,"Malawi",185
-"126",2020-11-15,"Malaysia",306
-"127",2020-11-15,"Maldives",42
-"128",2020-11-15,"Mali",139
-"129",2020-11-15,"Malta",95
-"130",2020-11-15,"Marshall Islands",0
-"131",2020-11-15,"Martinique",37
-"132",2020-11-15,"Mauritania",165
-"133",2020-11-15,"Mauritius",10
-"134",2020-11-15,"Mayotte",46
-"135",2020-11-15,"Mexico",97624
-"136",2020-11-15,"Micronesia",0
-"137",2020-11-15,"Monaco",2
-"138",2020-11-15,"Mongolia",0
-"139",2020-11-15,"Montenegro",391
-"140",2020-11-15,"Montserrat",1
-"141",2020-11-15,"Morocco",4697
-"142",2020-11-15,"Mozambique",110
-"143",2020-11-15,"Myanmar",1534
-"144",2020-11-15,"Namibia",138
-"145",2020-11-15,"Nauru",0
-"146",2020-11-15,"Nepal",1215
-"147",2020-11-15,"Netherlands",8432
-"148",2020-11-15,"New Caledonia",0
-"149",2020-11-15,"New Zealand",25
-"150",2020-11-15,"Nicaragua",158
-"151",2020-11-15,"Niger",70
-"152",2020-11-15,"Nigeria",1163
-"153",2020-11-15,"Niue",0
-"154",2020-11-15,"North Macedonia",1281
-"155",2020-11-15,"Northern Mariana Islands",2
-"156",2020-11-15,"Norway",294
-"157",2020-11-15,"occupied Palestinian territory, including east Jerusalem",633
-"158",2020-11-15,"Oman",1326
-"159",2020-11-15,"Other",13
-"160",2020-11-15,"Pakistan",7109
-"161",2020-11-15,"Palau",0
-"162",2020-11-15,"Panama",2856
-"163",2020-11-15,"Papua New Guinea",7
-"164",2020-11-15,"Paraguay",1556
-"165",2020-11-15,"Peru",35106
-"166",2020-11-15,"Philippines",7791
-"167",2020-11-15,"Pitcairn Islands",0
-"168",2020-11-15,"Poland",10045
-"169",2020-11-15,"Portugal",3305
-"170",2020-11-15,"Puerto Rico",921
-"171",2020-11-15,"Qatar",234
-"172",2020-11-15,"Republic of Korea",493
-"173",2020-11-15,"Republic of Moldova",2006
-"174",2020-11-15,"Réunion",29
-"175",2020-11-15,"Romania",8813
-"176",2020-11-15,"Russian Federation",33186
-"177",2020-11-15,"Rwanda",42
-"178",2020-11-15,"Saint Barthélemy",0
-"179",2020-11-15,"Saint Helena",0
-"180",2020-11-15,"Saint Kitts and Nevis",0
-"181",2020-11-15,"Saint Lucia",2
-"182",2020-11-15,"Saint Martin",12
-"183",2020-11-15,"Saint Pierre and Miquelon",0
-"184",2020-11-15,"Saint Vincent and the Grenadines",0
-"185",2020-11-15,"Samoa",0
-"186",2020-11-15,"San Marino",42
-"187",2020-11-15,"Sao Tome and Principe",16
-"188",2020-11-15,"Saudi Arabia",5641
-"189",2020-11-15,"Senegal",327
-"190",2020-11-15,"Serbia",989
-"191",2020-11-15,"Seychelles",0
-"192",2020-11-15,"Sierra Leone",74
-"193",2020-11-15,"Singapore",28
-"194",2020-11-15,"Sint Maarten",23
-"195",2020-11-15,"Slovakia",510
-"196",2020-11-15,"Slovenia",500
-"197",2020-11-15,"Solomon Islands",0
-"198",2020-11-15,"Somalia",107
-"199",2020-11-15,"South Africa",20206
-"200",2020-11-15,"South Sudan",59
-"201",2020-11-15,"Spain",40769
-"202",2020-11-15,"Sri Lanka",53
-"203",2020-11-15,"Sudan",1116
-"204",2020-11-15,"Suriname",114
-"205",2020-11-15,"Sweden",6164
-"206",2020-11-15,"Switzerland",2956
-"207",2020-11-15,"Syrian Arab Republic",341
-"208",2020-11-15,"Tajikistan",85
-"209",2020-11-15,"Thailand",60
-"210",2020-11-15,"The United Kingdom",51766
-"211",2020-11-15,"Timor-Leste",0
-"212",2020-11-15,"Togo",60
-"213",2020-11-15,"Tokelau",0
-"214",2020-11-15,"Tonga",0
-"215",2020-11-15,"Trinidad and Tobago",111
-"216",2020-11-15,"Tunisia",2279
-"217",2020-11-15,"Turkey",11418
-"218",2020-11-15,"Turkmenistan",0
-"219",2020-11-15,"Turks and Caicos Islands",6
-"220",2020-11-15,"Tuvalu",0
-"221",2020-11-15,"Uganda",144
-"222",2020-11-15,"Ukraine",9603
-"223",2020-11-15,"United Arab Emirates",528
-"224",2020-11-15,"United Republic of Tanzania",21
-"225",2020-11-15,"United States of America",242542
-"226",2020-11-15,"United States Virgin Islands",23
-"227",2020-11-15,"Uruguay",64
-"228",2020-11-15,"Uzbekistan",598
-"229",2020-11-15,"Vanuatu",0
-"230",2020-11-15,"Venezuela",844
-"231",2020-11-15,"Viet Nam",35
-"232",2020-11-15,"Wallis and Futuna",0
-"233",2020-11-15,"Yemen",603
-"234",2020-11-15,"Zambia",350
-"235",2020-11-15,"Zimbabwe",257
+"","Drzava","Stevilo primerov"
+"1","United States",19346790
+"2","India",10286709
+"3","Brazil",7619200
+"4","Russian Federation",3186336
+"5","France",2576420
+"6","United Kingdom",2488784
+"7","Italy",2107166
+"8","Spain",1893502
+"9","Germany",1742661
+"10","Colombia",1626461
+"11","Argentina",1613928
+"12","Mexico",1413935
+"13","Turkey",1394314
+"14","Poland",1305774
+"15","Iran",1225143
+"16","Ukraine",1064479
+"17","South Africa",1057561
+"18","Peru",1012614
+"19","Netherlands",797516
+"20","Indonesia",743198
+"21","Czechia",732022
+"22","Belgium",646496
+"23","Romania",632263
+"24","Chile",608973
+"25","Iraq",595291
+"26","Canada",572982
+"27","Bangladesh",513510
+"28","Pakistan",479715
+"29","Philippines",474064
+"30","Switzerland",450075
+"31","Morocco",439193
+"32","Sweden",437379
+"33","Portugal",413678
+"34","Israel",408277
+"35","Saudi Arabia",362741
+"36","Austria",359362
+"37","Serbia",337923
+"38","Hungary",325278
+"39","Jordan",294494
+"40","Nepal",260593
+"41","Panama",242744
+"42","Japan",234395
+"43","Georgia",228410
+"44","Azerbaijan",218700
+"45","Ecuador",212512
+"46","Croatia",212007
+"47","United Arab Emirates",207822
+"48","Bulgaria",202266
+"49","Kazakhstan",200443
+"50","Belarus",194284
+"51","Slovakia",184508
+"52","Lebanon",181503
+"53","Dominican Republic",170785
+"54","Costa Rica",168114
+"55","Denmark",163479
+"56","Armenia",158722
+"57","Bolivia",158372
+"58","Palestine",155365
+"59","Kuwait",150584
+"60","Moldova",144818
+"61","Lithuania",143903
+"62","Qatar",143834
+"63","Tunisia",139140
+"64","Greece",138850
+"65","Egypt",138062
+"66","Guatemala",138012
+"67","Oman",128867
+"68","Myanmar",124630
+"69","Ethiopia",124264
+"70","Slovenia",123950
+"71","Honduras",121827
+"72","Venezuela",113121
+"73","Malaysia",113010
+"74","Bosnia and Herzegovina",110985
+"75","Paraguay",106958
+"76","Libya",100277
+"77","Algeria",99610
+"78","China",96762
+"79","Kenya",96458
+"80","Bahrain",92675
+"81","Ireland",91779
+"82","Nigeria",87510
+"83","North Macedonia",83329
+"84","Kyrgyzstan",81156
+"85","Uzbekistan",77060
+"86","Puerto Rico",76291
+"87","South Korea",61769
+"88","Singapore",58599
+"89","Albania",58316
+"90","Ghana",54771
+"91","Afghanistan",52513
+"92","Kosovo",51285
+"93","Norway",48278
+"94","Montenegro",48231
+"95","Luxembourg",46598
+"96","El Salvador",45960
+"97","Sri Lanka",43299
+"98","Latvia",40904
+"99","Finland",36107
+"100","Uganda",35216
+"101","Australia",28408
+"102","Estonia",28406
+"103","Cameroon",26848
+"104","Namibia",23941
+"105","Sudan",23316
+"106","Cyprus",22651
+"107","Côte d’Ivoire",22250
+"108","Zambia",20725
+"109","Senegal",19140
+"110","Mozambique",18642
+"111","Uruguay",18480
+"112","Madagascar",17714
+"113","Angola",17553
+"114","DR Congo",17374
+"115","French Polynesia",16926
+"116","Botswana",14025
+"117","Zimbabwe",13867
+"118","Maldives",13757
+"119","Guinea",13722
+"120","Mauritania",13642
+"121","Tajikistan",13182
+"122","French Guiana",13166
+"123","Jamaica",12827
+"124","Malta",12774
+"125","Cuba",11863
+"126","Cabo Verde",11840
+"127","Syrian Arab Republic",11434
+"128","Belize",10724
+"129","Haiti",10015
+"130","Gabon",9571
+"131","Eswatini",9358
+"132","Réunion",9037
+"133","Guadeloupe",8620
+"134","Rwanda",8383
+"135","Andorra",8049
+"136","Bahamas",7871
+"137","Guam",7139
+"138","Trinidad and Tobago",7132
+"139","Mali",7090
+"140","Thailand",6884
+"141","Burkina Faso",6707
+"142","Malawi",6583
+"143","Guyana",6319
+"144","Congo",6200
+"145","Suriname",6181
+"146","Martinique",6091
+"147","Mayotte",5890
+"148","Djibouti",5831
+"149","Iceland",5754
+"150","Aruba",5442
+"151","Equatorial Guinea",5277
+"152","Central African Republic",4963
+"153","Nicaragua",4829
+"154","Somalia",4714
+"155","Curaçao",4230
+"156","Gambia",3800
+"157","Togo",3633
+"158","South Sudan",3558
+"159","Benin",3251
+"160","Niger",3208
+"161","Jersey",2726
+"162","Lesotho",2577
+"163","Sierra Leone",2560
+"164","Guinea-Bissau",2447
+"165","San Marino",2333
+"166","Liechtenstein",2221
+"167","Chad",2113
+"168","Yemen",2103
+"169","United States Virgin Islands",2031
+"170","Gibraltar",1973
+"171","New Zealand",1806
+"172","Liberia",1800
+"173","Viet Nam",1465
+"174","Sint Maarten",1434
+"175","Eritrea",1320
+"176","Mongolia",1215
+"177","Sao Tome and Principe",1014
+"178","Saint Martin",995
+"179","Monaco",875
+"180","Turks and Caicos Islands",874
+"181","Burundi",822
+"182","Papua New Guinea",780
+"183","Comoros",765
+"184","Other",745
+"185","Bhutan",670
+"186","Faroe Islands",610
+"187","Bermuda",604
+"188","Mauritius",527
+"189","Tanzania",509
+"190","Cambodia",378
+"191","Isle of Man",377
+"192","Barbados",372
+"193","Saint Lucia",353
+"194","Cayman Islands",330
+"195","Guernsey",298
+"196","Seychelles",267
+"197","Saint Barthélemy",190
+"198","Bonaire",165
+"199","Antigua and Barbuda",159
+"200","Brunei Darussalam",152
+"201","Grenada",134
+"202","Northern Mariana Islands",122
+"203","Saint Vincent and the Grenadines",119
+"204","Dominica",96
+"205","British Virgin Islands",93
+"206","Fiji",49
+"207","Timor-Leste",44
+"208","Lao People's Democratic Republic",41
+"209","New Caledonia",38
+"210","Saint Kitts and Nevis",32
+"211","Falkland Islands",29
+"212","Greenland",27
+"213","Holy See",26
+"214","Sint Eustatius",19
+"215","Solomon Islands",17
+"216","Saint Pierre and Miquelon",16
+"217","Anguilla",13
+"218","Montserrat",13
+"219","Saba",5
+"220","Marshall Islands",4
+"221","Wallis and Futuna",4
+"222","Vanuatu",1
+"223","American Samoa",0
+"224","Cook Islands",0
+"225","Democratic People's Republic of Korea",0
+"226","Kiribati",0
+"227","Micronesia",0
+"228","Nauru",0
+"229","Niue",0
+"230","Palau",0
+"231","Pitcairn Islands",0
+"232","Saint Helena",0
+"233","Samoa",0
+"234","Tokelau",0
+"235","Tonga",0
+"236","Turkmenistan",0
+"237","Tuvalu",0
