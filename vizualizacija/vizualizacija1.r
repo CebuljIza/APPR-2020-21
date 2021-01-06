@@ -1,9 +1,3 @@
-require(ggplot2)
-require(dplyr)
-library(shiny)
-library(tmap)
-library(leaflet)
-
 # preliminarna analiza
 graf1 <- HDI_drzave_leta %>%
   filter(Drzava %in% c("Slovenia", "United States", "Iceland")) %>%

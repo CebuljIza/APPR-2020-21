@@ -1,12 +1,3 @@
-library(dplyr)
-library(tidyr)
-library(readr)
-library(rvest)
-library(gsubfn)
-library(openxlsx)
-library(readxl)
-library(stringr)
-
 not_all_na <- function(x) any(!is.na(x))
 
 uvozi.hdi.csv <- function(tabela, stolpci, skip, max) {
@@ -55,17 +46,17 @@ uvozi.csv <- function(tabela, stolpci, skip, max) {
 ## 2. tabela (Education Index)
 st.ei <- c("HDI Rank (2018)","Drzava","1990","","1991","","1992","","1993","","1994","","1995","","1996","","1997","","1998","","1999","","2000","","2001","","2002","","2003","","2004","","2005","","2006","","2007","","2008","","2009","","2010","","2011","","2012","","2013","","2014","","2015","","2016","","2017","","2018","")
 izobrazba <- uvozi.csv("podatki/education_index.csv", st.ei, 2, 189) %>% 
-  rename("Indeks izobrazbe" = "Indeks")
+  rename("Indeks_izobrazbe" = "Indeks")
 
 ## 3. tabela (Life Expectancy Index)
 st.lei <- c("HDI Rank (2018)","Drzava","1990","","1991","","1992","","1993","","1994","","1995","","1996","","1997","","1998","","1999","","2000","","2001","","2002","","2003","","2004","","2005","","2006","","2007","","2008","","2009","","2010","","2011","","2012","","2013","","2014","","2015","","2016","","2017","","2018","")
 zivljenje <- uvozi.csv("podatki/life_expectancy_index.csv", st.lei, 2, 189) %>%
-  rename("Indeks zivljenja" = "Indeks")
+  rename("Indeks_zivljenja" = "Indeks")
 
 ## 4. tabela (Income Index)
 st.ii <- c("HDI Rank (2018)","Drzava","1990","","1991","","1992","","1993","","1994","","1995","","1996","","1997","","1998","","1999","","2000","","2001","","2002","","2003","","2004","","2005","","2006","","2007","","2008","","2009","","2010","","2011","","2012","","2013","","2014","","2015","","2016","","2017","","2018","")
 prihodek <- uvozi.csv("podatki/income_index.csv", st.ii, 2, 191) %>%
-  rename("Indeks prihodka" = "Indeks")
+  rename("Indeks_prihodka" = "Indeks")
 
 ## 5. tabela (Coefficient of human inequality)
 st.ineq <- c("HDI Rank (2018)","Drzava","2010","","2011","","2012","","2013","","2014","","2015","","2016","","2017","","2018","")
@@ -73,7 +64,7 @@ neenakost <- uvozi.csv("podatki/coefficient_of_human_inequality.csv", st.ineq, 2
   rename("Koeficient" = "Indeks")
 
 ### nov stolpec - Indeks neenakosti
-neenakost$"Indeks neenakosti" <- round(1 - ((neenakost$Koeficient - min(neenakost$Koeficient, na.rm = TRUE) + 0.01)/(max(neenakost$Koeficient, na.rm = TRUE) - min(neenakost$Koeficient, na.rm = TRUE))), digits = 2)
+neenakost$"Indeks_neenakosti" <- round(1 - ((neenakost$Koeficient - min(neenakost$Koeficient, na.rm = TRUE) + 0.01)/(max(neenakost$Koeficient, na.rm = TRUE) - min(neenakost$Koeficient, na.rm = TRUE))), digits = 2)
 
 # Funkcija za uvoz datoteke 'co2 emissions'
 uvozi.co2.csv <- function(tabela, stolpci, skip, max) {
@@ -93,11 +84,11 @@ uvozi.co2.csv <- function(tabela, stolpci, skip, max) {
 }
 
 ## 6. tabela (CO2 Emissions)
-st.co2 <- c("Drzava", "Code", "Leto", "CO2 izpust per capita")
+st.co2 <- c("Drzava", "Code", "Leto", "CO2_izpust_per_capita")
 izpusti <- uvozi.co2.csv("podatki/co2_emissions_per_capita.csv", st.co2, 1, Inf) 
 
 ### nov stolpec - Ekološki indeks
-izpusti$"Ekoloski indeks" <- round(1 - ((izpusti$"CO2 izpust per capita" - min(izpusti$"CO2 izpust per capita", na.rm = TRUE) + 0.01)/(max(izpusti$"CO2 izpust per capita", na.rm = TRUE) - min(izpusti$"CO2 izpust per capita", na.rm = TRUE))), digits = 2)
+izpusti$"Ekoloski_indeks" <- round(1 - ((izpusti$"CO2_izpust_per_capita" - min(izpusti$"CO2_izpust_per_capita", na.rm = TRUE) + 0.01)/(max(izpusti$"CO2_izpust_per_capita", na.rm = TRUE) - min(izpusti$"CO2_izpust_per_capita", na.rm = TRUE))), digits = 2)
 
 # Funkcija za uvoz datoteke WHO-COVID-19-global-data
 uvozi.who.csv <- function(tabela, stolpci, skip, max) {
@@ -108,13 +99,13 @@ uvozi.who.csv <- function(tabela, stolpci, skip, max) {
                    n_max = max,
                    na = c("", " ", "-", ".."))
   uvoz <- uvoz %>% 
-    select("Drzava", "Stevilo primerov")
+    select("Drzava", "Stevilo_primerov")
   uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\(.*?\\) *", "")
   return(uvoz)
 }
 
 ## 7. tabela (COVID data)
-st.cov <- c("Drzava","WHO Region" ,"Stevilo primerov" ,"Cases per 1 million population" ,"Cases in last 7 days","Cases in last 24 hours","Deaths - cumulative total","Deaths per 1 million population","Deaths in last 7 days","Deaths in last 24 hours","Transmission Classification")
+st.cov <- c("Drzava","WHO_Region" ,"Stevilo_primerov" ,"Cases_per_1_million_population" ,"Cases_in_last_7_days","Cases_in_last_24_hours","Deaths-cumulative_total","Deaths_per_1_million_population","Deaths_in_last_7_days","Deaths_in_last_24_hours","Transmission_Classification")
 covid <- uvozi.who.csv("podatki/WHO-COVID-19-global-data.csv", st.cov, 2, Inf)
 
 # Uvoz iz HTML (Prebivalstvo)
@@ -163,10 +154,10 @@ skupaj <- skupaj %>%
   drop_na()
 
 ### nov stolpec
-skupaj$"Stevilo primerov na 1000 prebivalcev" <- round(((skupaj$"Stevilo primerov" / skupaj$"Prebivalstvo") * 1000), digits = 2)
+skupaj$"Stevilo_primerov_na_1000_prebivalcev" <- round(((skupaj$"Stevilo_primerov" / skupaj$"Prebivalstvo") * 1000), digits = 2)
 
 ### nov stolpec z indeksom COVID
-skupaj$"Indeks COVID" <- round((1 - ((skupaj$"Stevilo primerov na 1000 prebivalcev" - min(skupaj$"Stevilo primerov na 1000 prebivalcev")) / (max(skupaj$"Stevilo primerov na 1000 prebivalcev") - min(skupaj$"Stevilo primerov na 1000 prebivalcev")))), digits = 2)
+skupaj$"Indeks_COVID" <- round((1 - ((skupaj$"Stevilo_primerov_na_1000_prebivalcev" - min(skupaj$"Stevilo_primerov_na_1000_prebivalcev")) / (max(skupaj$"Stevilo_primerov_na_1000_prebivalcev") - min(skupaj$"Stevilo_primerov_na_1000_prebivalcev")))), digits = 2)
 
 ## 10. tabela (Združimo tabele z indeksi izobrazbe, življenja, prihodka, neenakosti, izpustov in COVIDa)
 nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
@@ -174,7 +165,7 @@ nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
   left_join(., neenakost, by="Drzava") %>%
   left_join(., izpusti, by="Drzava") %>%
   left_join(., skupaj, by="Drzava") %>%
-  select("Drzava", "Indeks izobrazbe", "Indeks zivljenja", "Indeks prihodka", "Indeks neenakosti", "Ekoloski indeks", "Indeks COVID")
+  select("Drzava", "Indeks_izobrazbe", "Indeks_zivljenja", "Indeks_prihodka", "Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")
 
 #### popravim tabelo za računanje tam, kjer so vrednosti indeksov 0 ali na
 nov.hdi[nov.hdi$Drzava == "Comoros",]$"Indeks neenakosti" <- 0.01
@@ -183,8 +174,8 @@ nov.hdi[nov.hdi$Drzava == "Andorra",]$"Indeks COVID" <- 0.01
 nov.hdi[is.na(nov.hdi)] <- 0.01
 
 ### nova stolpca za star in nov HDI
-nov.hdi$"Stari HDI" <- round((nov.hdi$`Indeks izobrazbe` * nov.hdi$`Indeks zivljenja` * nov.hdi$`Indeks prihodka`) ** (1/3), digits = 2)
-nov.hdi$"Novi HDI" <- round((nov.hdi$`Indeks izobrazbe` * nov.hdi$`Indeks zivljenja` * nov.hdi$`Indeks prihodka` * nov.hdi$`Indeks neenakosti` * nov.hdi$`Ekoloski indeks` * nov.hdi$`Indeks COVID`) ** (1/6), digits = 2)
+nov.hdi$"Stari_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka`) ** (1/3), digits = 2)
+nov.hdi$"Novi_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka` * nov.hdi$`Indeks_neenakosti` * nov.hdi$`Ekoloski_indeks` * nov.hdi$`Indeks_COVID`) ** (1/6), digits = 2)
 
 ### popravki
 nov.hdi[nov.hdi$Drzava == "Korea", ]$Drzava <- "South Korea"
@@ -195,4 +186,3 @@ nov.hdi <- nov.hdi %>% rbind(nov.hdi, DR.Congo) %>%
 
 ## 11. tabela (Tabelo nov.hdi prečistimo in spravimo v tidy data)
 nov.hdi.tidy <- nov.hdi %>% pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
-
