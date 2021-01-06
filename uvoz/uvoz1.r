@@ -195,3 +195,4 @@ nov.hdi <- nov.hdi %>% rbind(nov.hdi, DR.Congo) %>%
 
 ## 11. tabela (Tabelo nov.hdi prečistimo in spravimo v tidy data)
 nov.hdi.tidy <- nov.hdi %>% pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
+

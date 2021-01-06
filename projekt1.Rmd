@@ -54,6 +54,7 @@ Podatkovne vire sem pridobila s spletnih strani:
 
 ```{r uvoz}
 source("uvoz/uvoz1.r", encoding="UTF-8")
+source("uvoz/pomozne tabele.r", encoding = "UTF-8")
 ```
 
 Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*. 
@@ -111,70 +112,81 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
 $$INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}$$
 Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
 
+```{r vizualizacija}
+source("vizualizacija/vizualizacija1.r", encoding = "UTF-8")
+```
+
 ### Preliminarna analiza
 Za analizo bom uporabljala samo prečiščeni tabeli [HDI-drzave-leta](podatki/preciscene-tabele/HDI-drzave-leta.csv) in [nov-hdi](podatki/preciscene-tabele/nov-hdi.csv). 
 
-#### Analiza indeksa človekovega razvoja
+##### Analiza indeksa človekovega razvoja
 V prvem delu analize bom analizirala indeks človekovega razvoja po državah v zadnjih 20 letih. 
 
-Zanimalo me bo, kako so na HDI vplivali dogodki, kot so gospodarske krize, vojne, pandemije in tehnološki napredek ter kako se države v rasti HDI-ja primerjajo med sabo, na primer kdaj je kakšna država prehitela druge in zakaj.
+Zanimalo me bo, kako se v indeksu primerjajo gospodarsko močne države in države, ki jih pestijo revščina in vojne. Zanimiva pojava v zadnjem desetletju sta prenos moči z zahoda na vzhod in negativna rast človekovega razvoja v nekaterih državah Severne Afrike in Bližnjega vzhoda ter v Venezueli.
 
-```{r}
-HDI_drzave_leta %>%
-  filter(Drzava %in% c("Slovenia", "United States", "Iceland")) %>%
-  ggplot(aes(x=Leto, y=Stevilo, color=Drzava)) + 
-  geom_line(size=2) +
-  labs(title="Primerjava rasti HDI-ja na v Sloveniji, Združenih državah Amerike in na Islandiji") +
-  ylab("Indeks") +
-  xlab("Leto")
+```{r graf1, fig.align='center'}
+graf1
 ```
 
-
-#### Novi indeks človekovega razvoja
+##### Novi indeks človekovega razvoja
 V drugem delu analize se bom posvetila novemu HDI in kako se ta primerja s starim. Kako nove spremenljivke v indeksu vplivajo na indeks posameznih držav.
 
 Vidimo, da se indeks večine držav zniža, prav dramatično pade pa v v Hong Kongu, Andori, Katarju in Južni Koreji. Tudi Sloveniji indeks pade za kar 0,11.
 
 Razlogi za padec so različni, Hong Kong, Qatar in Južna Koreja imajo med nižjima ekološki indeks in indeks COVID primerov. HDI v Andorri pade zaradi nizkih indeksov neenakosti in COVID. Slovenija ima prav tako nižji indeks zaradi nadpovprečno visokega števila primerov obolelih s COVID-19.
 
-Ponekod pa se indeks zviša: Indija ima majhen delež primerov koronavirusa, Niger pa ima nizek izpust ogljikovega dioksida.
+Ponekod pa se indeks zviša: Indija ima majhen delež (testiranih) primerov koronavirusa, Niger pa ima nizek izpust ogljikovega dioksida.
 
-```{r}
-nov.hdi.tidy %>%
-  filter(Drzava %in% c("Slovenia", "South Korea", "India", "Niger", "Hong Kong, China", "Andorra", "Qatar"),
-         Indeks %in% c("Stari HDI", "Novi HDI")) %>%
-  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
-  geom_col(position="dodge")
+```{r graf2, fig.align='center'}
+graf2
 ```
 
 # Analiza in vizualizacija podatkov
-```{r}
-HDI_drzave_leta %>%
-  filter(Drzava %in% c("Slovenia","Norway")) %>%
-  ggplot(aes(x=Leto, y=Stevilo, color=Drzava)) + 
-  geom_line(size=2) +
-  labs(title="Rast HDI-ja v Sloveniji in na Norveškem") +
-  ylab("Indeks") +
-  xlab("Leto")
+### Indeks človekovega razvoja v zadnjih dvajsetih letih
+```{r slonor, fig.align='center'}
+slonor
 ```
 
-Na grafu lahko vidimo rast indeksa človekovega razvoja po letih v Sloveniji in na Norveškem. V Sloveniji je indeks zelo hitro naraščal v obdobju pred gospodarsko krizo, potem pa rast ni bila več tako hitra. Leta 2012 je HDI celo padel zaradi prve veliko gospodarske krize po osamosvojitvi in varčevalnih ukrepov, ki so ji sledili. Indeks je znižala komponenta bruto nacionalnega prihodka na prebivalca.
+Na grafu lahko vidimo rast indeksa človekovega razvoja po letih v Sloveniji in na Norveškem. V **Sloveniji** je indeks zelo hitro naraščal v obdobju pred gospodarsko krizo, potem pa rast ni bila več tako hitra. Leta 2012 je HDI celo padel zaradi prve veliko gospodarske krize po osamosvojitvi in varčevalnih ukrepov, ki so ji sledili. Indeks je znižala komponenta bruto nacionalnega prihodka na prebivalca.
 
-Norveška pa glede na razvoj prednjači pred vsemi ostalimi državami in njeni prebivalci so med najsrečnejšimi na svetu. Gospodarsko je začela rasti sredi prejšnjega stoletja, ko je začela izvajati več reform glede neenakosti in kmetijstva. Norvežani trenutno delajo 35 ur na teden, imajo plačane dopuste ter svobodo govora in religije.
+**Norveška** glede na razvoj prednjači pred vsemi ostalimi državami in njeni prebivalci so med najsrečnejšimi na svetu. Gospodarsko je začela rasti sredi prejšnjega stoletja, ko je začela izvajati več reform glede neenakosti in kmetijstva. Norvežani trenutno delajo 35 ur na teden, imajo plačane dopuste ter svobodo govora in religije. Čeprav se v veliko stvareh, kot sta brezplačno šolstvo in zdravstvo, Norvežani ne razlikujejo veliko od povprečne evropske države, pa imajo zelo močno demokracijo, ki zagotavlja zadovoljstvo večine državljanov in tako omogoča vodilno stopnjo razvoja.
 
-```{r}
-HDI_drzave_leta %>%
-  filter(Drzava %in% c("United States", "Iceland", "Hong Kong, China", "Singapore", "Denmark")) %>%
-  ggplot(aes(x=Leto, y=Stevilo, color=Drzava)) + 
-  geom_line(size=1) +
-  labs(title="Indeks Združenih držav Amerike glede na ostale države") +
-  ylab("Indeks") +
-  xlab("Leto") + 
-  geom_point(size=2) + 
-  scale_x_continuous(breaks = HDI_drzave_leta$Leto, labels = HDI_drzave_leta$Leto) + 
-  theme_minimal() +
-  theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5)) 
+```{r mindrz, fig.align='center'}
+mindrz
 ```
 
-Na tem grafu so prikazani podatki za Združene države Amerike, Dansko, Hong Kong, Islandijo in Singapur. Leta 1998 je ZDA imela višji indeks od vseh naštetih držav. Veljala je za eno najbolj gospodarsko razvitih držav. Njen indeks je v letih sicer rastel, a so jo v le dvajsetih letih za sabo pustile vsaj štiri države.
-Prva jo je leta 2003 prehitela Danska, leta 2012 Singapur, naslednje leto pa še Islandija in Hong Kong.  
+Vidimo, da je HDI 5 najšibkejših držav v zadnjih letih strmo naraščal, še vedno pa ne dosega nivoja najbolj razvitih držav. Najbolj se je povzpela **Etiopija**, iz predzadnjega mesta na prvo med temi državami. Je tudi edina, kateri je indeks narasel čez 0.45. Najpočasneje pa se je razvil **Čad**, med temi državami mu je kazalo najbolje, leta 2018 pa je samo pred **Nigrom**, ki je najslabše razvita država še danes. 
+
+```{r negrast, fig.align='center'}
+negrast
+```
+
+Padec indeksa človekovega razvoja je redek pojav in še to le v zadnjem desetletju. Vidimo lahko, da je vpliv političnih režimov in vojn na civilno prebivalstvo vse večji. V **Libanonu** vlada gospodarska kriza in delež brezposelnosti je 25%, poleg tega pa si še niso opomogli po arabski pomladi. Podobno je leta 2011 indeks začel padati tudi **Libiji** in **Južnemu Sudanu**. **Jemen** je že deseto leto sredi civilne vojne, ki pa je začela tudi lakoto, ki trenutno napada 17 milijonov ljudi. Združeni narodi pa poročajo, da kar 85% prebivalstva potrebuje humanitarno pomoč. V **Venezueli** indeks pada od predsedniških volitev leta 2013, ki so sprožile verigo nasilnih protestov in gospodarsko krizo.
+
+```{r maxdrz, fig.align='center'}
+maxdrz
+```
+
+Indeks človekovega razvoja pa je naraščal ostalim državam, k čemur sta pripomogla napredek v tehnologiji in zdravstvu. Norveška je vedno bila po razvoju korak pred vsemi. Najmanj stabilna rast je bila v obdobju gospodarske krize, 2009-2013, ko je **Norveški**, **Švedski**, **Združenim državam** in tudi **Avstraliji** indeks nekoliko upadel, a so si od takrat vse opomogle. Nasprotno pa na enem prejšnjih grafov držav z najmanjšim indeksom vpliv ekonomske krize komaj zaznamo. 
+
+```{r zda, fig.align='center'}
+zda
+```
+
+Leta 1998 je **ZDA** imela višji indeks od Danske, Nemčije, Islandije, Irske in Švice. Veljala je za eno najbolj gospodarsko razvitih držav. Njen indeks je v letih sicer rastel in še danes je gospodarska velesila, a jo je v le dvajsetih letih za sabo pustilo vsaj pet evropskih držav. Sedaj je na zadnjem mestu izmed držav z najboljšim indeksom.
+Prva jo je prehitela Švica, nato Danska in Nemčija, leta 2013 in 2014 pa še Islandija in Irska. 
+Čeprav niso na grafu, so tudi nekatere azijske države, kot sta Hong Kong in Singapur, prehitele Združene države Amerike. V naslednjiem grafu je zato predstavljen prenos moči z zahoda na vzhod.
+
+```{r vzhod, fig.align='center'}
+vzhod
+```
+
+Še dobrih 10 let nazaj so bile **Združene države** in **Združeno kraljestvo** dve izmed vodilnih držav po indeksu človekovega razvoja. Potem pa je zahod prizadela gospodarska kriza, ki je vzhodne države niso čutile in so se začele vzpenjati ne samo v gospodarstvu, ampak tudi v izobrazbi in zdravstvu, česar povprečje je indeks človekovega razvoja. Kriza je pustila posledice: gospodarsko uspešni zahodni državi je najprej v razvoju prehitel **Singapur**, nato pa še **Hong Kong**. Rast se je v ZDA in VB umirila že prej, glede na trend zadnjih let pa se trenutno umirja tudi rast indeksa Singapurja in Hong Konga.
+
+```{r zem2018, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+zem2018
+```
+
+Zemljevid prikaže indeks človekovega razvoja v letu 2018. Države, obarvane z modro, imajo najnižji indeks, tiste, ki pa so obarvane z rdečo, imajo najvišjega. Zelo dobro se vidijo razlike med Evropo in Severno Ameriko ter Južno Ameriko in Afriko.
+
+### Novi indeks človekovega razvoja
