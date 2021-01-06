@@ -59,6 +59,8 @@ uvozi.zemljevid <- function(url, ime.zemljevida, pot.zemljevida="",
       if (is.factor(zemljevid[[col]])) {
         zemljevid[[col]] <- zemljevid[[col]] %>% as.character() %>%
           parse_character(locale=loc) %>% factor()
+      } else if (is.character(zemljevid[[col]])) {
+        zemljevid[[col]] <- zemljevid[[col]] %>% parse_character(locale=loc)
       }
     }
   }
