@@ -15,6 +15,7 @@ library(doBy) #za fun which.maxn
 library(tmap) 
 library(ggplot2) 
 library(leaflet)
+library(plotly)
 
 library(shiny)
 

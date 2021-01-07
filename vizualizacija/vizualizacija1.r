@@ -9,7 +9,7 @@ graf1 <- HDI_drzave_leta %>%
 
 graf2 <- nov.hdi.tidy %>%
   filter(Drzava %in% c("Slovenia", "South Korea", "India", "Niger", "Hong Kong, China", "Andorra", "Qatar"),
-         Indeks %in% c("Stari HDI", "Novi HDI")) %>%
+         Indeks %in% c("Stari_HDI", "Novi_HDI")) %>%
   ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
   geom_col(position="dodge")
 
@@ -88,3 +88,80 @@ zemljevid <- uvozi.zemljevid("https://www.naturalearthdata.com/http//www.natural
 zem2018 <- tm_shape(merge(zemljevid, leto2018, by.x="NAME_LONG", by.y="Drzava")) +
   tm_polygons("Stevilo", title="HDI leta 2018", palette = c("blue", "lavender", "red"), fill = TRUE) +
   tm_text("ABBREV", size=0.5)
+
+# Novi HDI
+
+graf.priheko <- ggplot(priheko, aes(Indeks_prihodka, Indeks_izpusta_CO2, color=Drzava)) +
+  geom_point() +
+  geom_smooth(method="gam", formula = y ~ s(x, bs = "cs"), se=F, color="grey") +
+  labs(title = "Povezava med prihodkom in izpustom ogljikovega dioksida") + 
+  ylab("Izpust CO2") +
+  xlab("Prihodek") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+graf.priheko1 <- graf.priheko %>% ggplotly()
+
+##
+graf.maxpadec <- maxpadec1 %>%
+  filter(Indeks %in% c("Stari_HDI", "Novi_HDI")) %>%
+  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
+  geom_col(position="dodge") +
+  labs(title="Države z največjim padcem indeksa") +
+  ylab("Vrednost") +
+  xlab("Država") + 
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
+
+graf.maxpadec1 <- graf.maxpadec %>% ggplotly()
+
+graf.maxpadec2 <- maxpadec1 %>%
+  filter(Drzava %in% c("Hong Kong, China", "Qatar", "Bahrain", "South Korea", "Liechtenstein"),
+         Indeks %in% c("Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")) %>%
+  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
+  geom_col(position="dodge") +
+  labs(title="Razlogi za padec indeksa") +
+  ylab("Vrednost") +
+  xlab("Država") + 
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
+
+graf.maxpadec3 <- graf.maxpadec2 %>% ggplotly()
+
+graf.maxrast <- maxrast1 %>%
+  filter(Indeks %in% c("Stari_HDI", "Novi_HDI")) %>%
+  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
+  geom_col(position="dodge") +
+  labs(title="Države z največjo rastjo indeksa") +
+  ylab("Vrednost") +
+  xlab("Država") + 
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
+
+graf.maxrast1 <- graf.maxrast %>% ggplotly()
+
+graf.novhdi <- nov.hdi.tidy %>%
+  filter(Drzava %in% c("Slovenia", "United States", max.drzave2018),
+         Indeks %in% c("Stari_HDI", "Novi_HDI")) %>%
+  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
+  geom_col(position="dodge") +
+  labs(title="Stari in novi indeks človekovega razvoja") +
+  ylab("Vrednost") +
+  xlab("Država") + 
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
+
+graf.novhdi1 <- graf.novhdi %>% ggplotly()
+
+graf.novhdi2 <- nov.hdi.tidy %>%
+  filter(Drzava %in% c("Slovenia", "United States", max.drzave2018),
+         Indeks %in% c("Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")) %>%
+  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
+  geom_col(position="dodge") +
+  labs(title="Razlogi za padec indeksa") +
+  ylab("Vrednost") +
+  xlab("Država") + 
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
+
+graf.novhdi3 <- graf.novhdi2 %>% ggplotly()

@@ -168,9 +168,9 @@ nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
   select("Drzava", "Indeks_izobrazbe", "Indeks_zivljenja", "Indeks_prihodka", "Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")
 
 #### popravim tabelo za računanje tam, kjer so vrednosti indeksov 0 ali na
-nov.hdi[nov.hdi$Drzava == "Comoros",]$"Indeks neenakosti" <- 0.01
-nov.hdi[nov.hdi$Drzava == "Qatar",]$"Ekoloski indeks" <- 0.01
-nov.hdi[nov.hdi$Drzava == "Andorra",]$"Indeks COVID" <- 0.01
+nov.hdi[nov.hdi$Drzava == "Comoros",]$"Indeks_neenakosti" <- 0.01
+nov.hdi[nov.hdi$Drzava == "Qatar",]$"Ekoloski_indeks" <- 0.01
+nov.hdi[nov.hdi$Drzava == "Andorra",]$"Indeks_COVID" <- 0.01
 nov.hdi[is.na(nov.hdi)] <- 0.01
 
 ### nova stolpca za star in nov HDI
@@ -180,7 +180,7 @@ nov.hdi$"Novi_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivlje
 ### popravki
 nov.hdi[nov.hdi$Drzava == "Korea", ]$Drzava <- "South Korea"
 DR.Congo <- data.frame("DR Congo", 0.459, 0.621, 0.314, 0.33, 0.98, 0.98, 0.46, 0.56)
-names(DR.Congo) <- c("Drzava", "Indeks izobrazbe", "Indeks zivljenja", "Indeks prihodka", "Indeks neenakosti", "Ekoloski indeks", "Indeks COVID", "Stari HDI", "Novi HDI")
+names(DR.Congo) <- c("Drzava", "Indeks_izobrazbe", "Indeks_zivljenja", "Indeks_prihodka", "Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID", "Stari_HDI", "Novi_HDI")
 nov.hdi <- nov.hdi %>% rbind(nov.hdi, DR.Congo) %>% 
   distinct(Drzava, .keep_all = TRUE)
 
