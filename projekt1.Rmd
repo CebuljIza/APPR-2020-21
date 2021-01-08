@@ -52,7 +52,7 @@ Podatkovne vire sem pridobila s spletnih strani:
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r uvoz}
+```{r uvoz, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 source("uvoz/uvoz1.r", encoding="UTF-8")
 source("uvoz/pomozne tabele.r", encoding = "UTF-8")
 ```
@@ -112,7 +112,7 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
 $$INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}$$
 Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
 
-```{r vizualizacija}
+```{r vizualizacija, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 source("vizualizacija/vizualizacija1.r", encoding = "UTF-8")
 ```
 
@@ -147,7 +147,7 @@ graf2
 slonor
 ```
 
-Na grafu lahko vidimo rast indeksa človekovega razvoja po letih v Sloveniji in na Norveškem. V **Sloveniji** je indeks zelo hitro naraščal v obdobju pred gospodarsko krizo, potem pa rast ni bila več tako hitra. Leta 2012 je HDI celo padel zaradi prve veliko gospodarske krize po osamosvojitvi in varčevalnih ukrepov, ki so ji sledili. Indeks je znižala komponenta bruto nacionalnega prihodka na prebivalca.
+Na grafu lahko vidimo rast indeksa človekovega razvoja po letih v Sloveniji in na Norveškem. V **Sloveniji** je indeks zelo hitro naraščal v obdobju pred gospodarsko krizo, potem pa rast ni bila več tako hitra. Leta 2012 je HDI celo padel zaradi prve velike gospodarske krize po osamosvojitvi in varčevalnih ukrepov, ki so ji sledili. Indeks je znižala komponenta bruto nacionalnega prihodka na prebivalca.
 
 **Norveška** glede na razvoj prednjači pred vsemi ostalimi državami in njeni prebivalci so med najsrečnejšimi na svetu. Gospodarsko je začela rasti sredi prejšnjega stoletja, ko je začela izvajati več reform glede neenakosti in kmetijstva. Norvežani trenutno delajo 35 ur na teden, imajo plačane dopuste ter svobodo govora in religije. Čeprav se v veliko stvareh, kot sta brezplačno šolstvo in zdravstvo, Norvežani ne razlikujejo veliko od povprečne evropske države, pa imajo zelo močno demokracijo, ki zagotavlja zadovoljstvo večine državljanov in tako omogoča vodilno stopnjo razvoja.
 
@@ -210,7 +210,7 @@ Največ je indeks padel v prikazanih državah, seveda zaradi različnih razlogov
 graf.maxpadec3
 ```
 
-Res, pri **Bahrainu** in **Katarju** vidimo, da imata skoraj ničeln indeks neenakosti. Katar ima poleg tega še zelo velik izpust ogljikovega dioksida in zato nizek ekološki indeks. V **Hong Kongu** in **Južni Koreji** sta nizka tako ekološki indeks kot tudi indeks COVID, ki nam pove, da sta državi imeli zelo velik delež pozitivnih primerov koronavirusa. To pa je sicer možno tudi zaradi velikega števila testiranj, ki pa ga v revnejših državah Afrike in Azije ne izvajajo in zato morda številke niso realne. 
+Res, pri **Bahrainu** in **Katarju** vidimo, da imata skoraj ničeln indeks neenakosti. Katar ima poleg tega še zelo velik izpust ogljikovega dioksida in zato nizek ekološki indeks. V **Hong Kongu** in **Južni Koreji** sta nizka tako ekološki indeks kot tudi indeks COVID, ki nam pove, da sta državi imeli zelo velik delež pozitivnih primerov koronavirusa.
 **Lihtenštajn** pa vidimo, da ima zelo nizek indeks neenakosti. Pri tem moramo upoštevati, da indeks ne meri bogastva, izobraženosti ali zdravja države, ampak razlike med njenimi najbogatejšimi in najbolj izobraženimi ter najrevnejšimi in najmanj izobraženimi. Tako bo v primeru, da so vsi prebivalci zelo revni, indeks lahko še vseeno zelo visok. V Lihtenštajnu so razlike velike, ker v zadnjem času beležijo veliko priseljencev, za katere pa je več možnosti, da bodo imeli nizek prihodek in manj izobrazbe, sploh pa v primerjavi z enimi izmed najbogatejših prebivalcev na svetu.
 
 ```{r graf.maxrast1, fig.align='center'}
@@ -223,15 +223,15 @@ Vidimo, da je indeks ponekod tudi zrastel, vendar pa v nobeni od držav tako dra
 graf.novhdi1
 ```
 
-Poglejmo še rast indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Čeprav je razumljivo padel zaradi ekološkega odtisa in velikega števila primerov koronavirusa, padec nikjer ni bil dramatičen, s česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
+Poglejmo še rast novega indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Čeprav je razumljivo padel zaradi ekološkega odtisa in velikega števila primerov koronavirusa, padec nikjer ni bil dramatičen, s česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
 Najbolj izstopajo Združene države Amerike - v tej državi je indeks padel največ in najnižje, celo pod vrednost 0.75.
 
 ```{r graf.novhdi2, fig.align='center'}
 graf.novhdi3
 ```
 
-Čeprav imajo prikazane države svoj indeks človekovega višji od vseh ostalih držav, so vseeno razlogi za padec v HDI-ju različni. Prve štiri države na grafu imajo zelo visoke nove indekse, z izjemo avstralskega ekološkega indeksa. Razlike med prebivalci so po indeksu neenakosti majhne, države pa se tudi trudijo ohranjati čim višji indeks COVID, vodi Avstralija, ki ima očitno daleč najmanj primerov na prebivalca.
+Čeprav imajo prikazane države svoj indeks človekovega razvoja višji od vseh ostalih držav, so vseeno razlogi za padec v HDI-ju različni. Prve štiri države na grafu imajo zelo visoke nove indekse, z izjemo avstralskega ekološkega indeksa. Razlike med prebivalci so po indeksu neenakosti majhne, države pa se tudi trudijo ohranjati čim višji indeks COVID, vodi Avstralija, ki ima očitno daleč najmanj primerov na prebivalca.
 Ostalim trem državam, Sloveniji, Švici in ZDA pa nizek indeks COVID zelo zmanjšuje novi HDI. **Slovenija** ima izmed prikazanih držav najnižjega in se niti ne more primerjati z Norveško, Irsko, Nemčijo in Avstralijo.
-**ZDA** pa imajo poleg indeksa COVID od vseh ostalih držav manjša tudi ostala dva indeksa. Razlike so zelo očitne in kažejo na veliko večjo neenakost in ekološki odtis od ostalih držav.
+**ZDA** pa imajo poleg indeksa COVID od vseh ostalih držav manjša tudi ostala dva indeksa. Razlika je zelo očitna in kaže na veliko večjo neenakost in ekološki odtis v ZDA kot pa v drugih podobno razvitih državah.
 
 # Shiny
