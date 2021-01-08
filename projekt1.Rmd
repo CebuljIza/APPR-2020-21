@@ -233,5 +233,3 @@ graf.novhdi3
 Čeprav imajo prikazane države svoj indeks človekovega razvoja višji od vseh ostalih držav, so vseeno razlogi za padec v HDI-ju različni. Prve štiri države na grafu imajo zelo visoke nove indekse, z izjemo avstralskega ekološkega indeksa. Razlike med prebivalci so po indeksu neenakosti majhne, države pa se tudi trudijo ohranjati čim višji indeks COVID, vodi Avstralija, ki ima očitno daleč najmanj primerov na prebivalca.
 Ostalim trem državam, Sloveniji, Švici in ZDA pa nizek indeks COVID zelo zmanjšuje novi HDI. **Slovenija** ima izmed prikazanih držav najnižjega in se niti ne more primerjati z Norveško, Irsko, Nemčijo in Avstralijo.
 **ZDA** pa imajo poleg indeksa COVID od vseh ostalih držav manjša tudi ostala dva indeksa. Razlika je zelo očitna in kaže na veliko večjo neenakost in ekološki odtis v ZDA kot pa v drugih podobno razvitih državah.
-
-# Shiny
