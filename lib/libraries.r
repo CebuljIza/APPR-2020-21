@@ -9,7 +9,6 @@ library(readxl)
 library(stringr)
 library(knitr)
 library(gsubfn)
-library(doBy) #za fun which.maxn
 
 # knjižnice za vizualizacije
 library(tmap) 

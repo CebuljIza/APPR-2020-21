@@ -74,7 +74,7 @@ vzhod <- HDI_drzave_leta %>%
   filter(Drzava %in% c("United States", "United Kingdom", "Hong Kong, China", "Singapore")) %>%
   ggplot(aes(x=Leto, y=Stevilo, color=Drzava)) + 
   geom_line(size=2) +
-  labs(title="Prenos moči z zahoda na vzhod") +
+  labs(title="Prenos moči z Zahoda na Vzhod") +
   ylab("Indeks") +
   xlab("Leto") + 
   scale_x_continuous(breaks = HDI_drzave_leta$Leto, labels = HDI_drzave_leta$Leto) + 

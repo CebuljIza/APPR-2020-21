@@ -7,10 +7,10 @@ tabela1$"Dvig_HDI" <- tabela1$"Novi_HDI" - tabela1$"Stari_HDI"
 leto2000 <- HDI_drzave_leta %>% filter(Leto == 2000) %>%
   select(-"Leto")
 
-tabela3 <- leto2000[c(which.maxn(leto2000$Stevilo, n=5)),] 
+tabela3 <- leto2000 %>% arrange(desc(Stevilo)) %>% slice(1:5) 
 max.drzave2000 <- as.vector(tabela3$Drzava)
 
-tabela4 <- leto2000[c(which.minn(leto2000$Stevilo, n=5)),]
+tabela4 <- leto2000 %>% arrange(Stevilo) %>% slice(1:5)
 min.drzave2000 <- as.vector(tabela4$Drzava)
 
 leto2018 <- HDI_drzave_leta %>% 
@@ -28,19 +28,21 @@ priheko$"Indeks_izpusta_CO2" <- 1 - priheko$"Ekoloski_indeks"
 priheko <- priheko %>% select(-"Ekoloski_indeks")
 
 ## največji padec
-maxpadec <- tabela1[c(which.maxn(tabela1$Padec_HDI, n=10)),]
+maxpadec <- tabela1 %>% arrange(desc(Padec_HDI)) %>% slice(1:10)
 
 maxpadec1 <- left_join(maxpadec, nov.hdi) %>% 
   select(-"Padec_HDI", -"Dvig_HDI") %>%
   pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
 
 ## največja rast
-maxrast <- tabela1[c(which.maxn(tabela1$Dvig_HDI, n=10)),]
+maxrast <- tabela1 %>% arrange(desc(Dvig_HDI)) %>% slice(1:10)
 
 maxrast1 <- left_join(maxrast, nov.hdi) %>% 
   select(-"Padec_HDI", -"Dvig_HDI") %>%
   pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
 
-tabela5 <- leto2018[c(which.maxn(leto2018$Stevilo, n=6)),] %>%
+tabela5 <- leto2018 %>% arrange(desc(Stevilo)) %>% 
+  slice(1:6) %>%
   filter(Drzava != "Hong Kong, China")
+
 max.drzave2018 <- as.vector(tabela5$Drzava)

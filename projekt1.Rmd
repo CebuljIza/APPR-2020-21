@@ -29,10 +29,10 @@ Za projekt sem si izbrala analizo indeksa človekovega razvoja (ang. human devel
 Kljub temu, da je to zelo napreden indikator blagostanja v državi, ima nekatere pomankljivosti, saj ne upošteva: 
 
 - **neenakosti v državi** - država je lahko relativno bogata zaradi nekaj posameznikov, medtem ko preostanek prebivalstva živi v revščini,
-- **ekološkega odtisa** - analiza je pokazala, da imajo države z visokim HDI tudi zelo visok izpust ogljikovega dioksida, kar pa nikakor ni dobro za razvoj in blagostanje v prihodnosti in 
-- **stanja zdravstvenega sistema**, ki se je v času pandemije koronavirusa izkazal za zelo dobrega pokazatelja gospodarskega napredka države.
+- **ekološkega odtisa** - analiza je pokazala, da imajo države z visokim HDI tudi zelo visok izpust ogljikovega dioksida, kar pa nikakor ni dobro za razvoj in blagostanje v prihodnosti, in 
+- **stanja zdravstvenega sistema**, ki je v času pandemije  novega koronavirusa zelo dobro nakazal gospodarski napredek in stabilnost države.
 
-Poleg analize HDI zadnjih 20 let po državah, bom v projektu izračunala tudi novi HDI, ki bo upošteval tudi neenakost med prebivalci, izpuste CO2 in COVID smrti na prebivalca.
+Poleg analize HDI zadnjih 20 let po državah bom v projektu izračunala tudi novi HDI, ki bo upošteval tudi neenakost med prebivalci, izpuste CO2 in število COVID primerov na 1000 prebivalcev.
 
 ### Podatkovni viri
 
@@ -47,7 +47,7 @@ Podatkovne vire sem pridobila s spletnih strani:
 + [Our World in Data](https://ourworldindata.org/co2-emissions)
   - [Izpusti CO2, v tonah na prebivalca](podatki/co2_emissions_per_capita.csv)
 + [Svetovna zdravstvena organizacija](https://covid19.who.int/table)
-  - [Smrti COVID](podatki/WHO-COVID-19-global-data.csv)
+  - [Primeri COVID](podatki/WHO-COVID-19-global-data.csv)
 + [Wikipedija](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population)
 
 # Obdelava, uvoz in čiščenje podatkov
@@ -66,7 +66,7 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
 2. `izobrazba` - podatki o indeksu izobrazbe, izračunanem glede na stopnjo pismenosti in povprečna leta šolanja
   - `Drzava` - ime države
   - `Indeks_izobrazbe` - indeks izobrazbe v državi
-3. `zivljenje` - podatki o indeksu pričakovane življenske dobe
+3. `zivljenje` - podatki o indeksu pričakovane življenjske dobe
   - `Drzava` - ime države
   - `Indeks_zivljenja` - indeks pričakovane življenjske dobe
 4. `prihodek` - podatki o indeksu dohodka, izračunanem glede na bruto nacionalni dohodek per capita
@@ -74,11 +74,11 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
   - `Indeks_prihodka` - indeks prihodka v državi
 5. `neenakost` - podatki o neenakosti v izobrazbi, zdravju in prihodku med državljani
   - `Drzava` - ime države
-  - `Koeficient` - koeficient neenakosti, ki ga je izračunal Razvojni program združenih narodov
+  - `Koeficient` - koeficient neenakosti, ki so ga izračunali v Razvojnem programu Združenih narodov
   - `Indeks_neenakosti` - indeks, izračunan glede na koeficient po formuli, podani spodaj
 6. `izpusti` - podatki o izpustih ogljikovega dioksida
   - `Drzava` - ime države
-  - `CO2_izpust_per_capita` - CO2 izpust v tonah na prebivalca
+  - `CO2_izpust_per_capita` - CO2 izpust v tonah na prebivalca, letno
   - `Ekoloski_indeks` - indeks, izračunan glede na izpust po formuli, podani spodaj
 7. `covid` - podatki o številu primerov novega koronavirusa
   - `Drzava` - ime države
@@ -86,19 +86,19 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
 8. `prebivalstvo` - podatki o prebivalstvu po državah
   - `Drzava` - ime države
   - `Prebivalstvo` - število prebivalcev v državi
-9. `skupaj` - Število COVID smrti na prebivalca - združimo tabeli covid in prebivalstvo
+9. `skupaj` - Število COVID primerov na 1000 prebivalcev - združimo tabeli covid in prebivalstvo
   - `Drzava` - ime države
   - `Stevilo_primerov` - število primerov za državo, kumulativno
   - `Prebivalstvo` - število prebivalcev v državi
   - `Stevilo_primerov_na_1000_prebivalcev` - število primerov na 1000 prebivalcev
   - `Indeks_COVID` - indeks, izračunan glede na število primerov po formuli, podani spodaj
-10. `nov.hdi` - tabela s šestimi indeksi in izračunanima starim in novim HDI-jem
+10. `nov.hdi` - tabela s šestimi indeksi in izračunanim starim in novim HDI-jem
   - `Drzava` - ime države
   - `Indeks_izobrazbe` - indeks izobrazbe v državi
   - `Indeks_zivljenja` - indeks pričakovane življenjske dobe
   - `Indeks_prihodka` - indeks prihodka v državi
   - `Indeks_neenakosti` - indeks, izračunan glede na koeficient neenakosti
-  - `Ekoloski_indeks` - indeks, izračunan glede na izpust
+  - `Ekoloski_indeks` - indeks, izračunan glede na izpust CO2
   - `Indeks_COVID` - indeks, izračunan glede na število primerov po formuli, podani spodaj
   - `Stari_HDI` - indeks človekovega razvoja, izračunan kot geometrijsko povprečje prvih treh indeksov
   - `Novi_HDI` - nov indeks človekovega razvoja, izračunan kot geometrijsko povprečje vseh šestih indeksov
@@ -110,7 +110,7 @@ Podatke imamo v desetih CSV razpredelnicah v obliki *tidy data*.
   
 **Formula za izračun indeksov neenakosti, izpustov in COVID smrti:**
 $$INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}$$
-Indeks je 1, ko je vrednost najmanjša in 0, ko je vrednost največja.
+Indeks je 1, ko je vrednost najmanjša, in 0, ko je vrednost največja.
 
 ```{r vizualizacija, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 source("vizualizacija/vizualizacija1.r", encoding = "UTF-8")
@@ -129,11 +129,11 @@ graf1
 ```
 
 ##### Novi indeks človekovega razvoja
-V drugem delu analize se bom posvetila novemu HDI in kako se ta primerja s starim. Kako nove spremenljivke v indeksu vplivajo na indeks posameznih držav.
+V drugem delu analize se bom posvetila novemu HDI in ga primerjala s starim, pri čemer bo glavno vprašanje kako nove spremenljivke v indeksu vplivajo na človekov razvoj. 
 
-Vidimo, da se indeks večine držav zniža, prav dramatično pade pa v v Hong Kongu, Andori, Katarju in Južni Koreji. Tudi Sloveniji indeks pade za kar 0,11.
+Vidimo, da se indeks večine držav zniža, najbolj pade pa v Hongkongu, Andori, Katarju in Južni Koreji. Tudi Sloveniji indeks pade za kar 0,11 točke.
 
-Razlogi za padec so različni, Hong Kong, Qatar in Južna Koreja imajo med nižjima ekološki indeks in indeks COVID primerov. HDI v Andorri pade zaradi nizkih indeksov neenakosti in COVID. Slovenija ima prav tako nižji indeks zaradi nadpovprečno visokega števila primerov obolelih s COVID-19.
+Razlogi za padec so različni, Hongkong, Katar in Južna Koreja imajo zelo nizek tako ekološki indeks kot indeks COVID. HDI v Andori pade tako zaradi indeksa neenakosti kot indeksa COVID. Slovenija ima prav tako nižji indeks zaradi nadpovprečno visokega števila primerov obolelih s COVIDOM-19.
 
 Ponekod pa se indeks zviša: Indija ima majhen delež (testiranih) primerov koronavirusa, Niger pa ima nizek izpust ogljikovega dioksida.
 
@@ -149,25 +149,25 @@ slonor
 
 Na grafu lahko vidimo rast indeksa človekovega razvoja po letih v Sloveniji in na Norveškem. V **Sloveniji** je indeks zelo hitro naraščal v obdobju pred gospodarsko krizo, potem pa rast ni bila več tako hitra. Leta 2012 je HDI celo padel zaradi prve velike gospodarske krize po osamosvojitvi in varčevalnih ukrepov, ki so ji sledili. Indeks je znižala komponenta bruto nacionalnega prihodka na prebivalca.
 
-**Norveška** glede na razvoj prednjači pred vsemi ostalimi državami in njeni prebivalci so med najsrečnejšimi na svetu. Gospodarsko je začela rasti sredi prejšnjega stoletja, ko je začela izvajati več reform glede neenakosti in kmetijstva. Norvežani trenutno delajo 35 ur na teden, imajo plačane dopuste ter svobodo govora in religije. Čeprav se v veliko stvareh, kot sta brezplačno šolstvo in zdravstvo, Norvežani ne razlikujejo veliko od povprečne evropske države, pa imajo zelo močno demokracijo, ki zagotavlja zadovoljstvo večine državljanov in tako omogoča vodilno stopnjo razvoja.
+**Norveška** glede na razvoj prednjači pred vsemi ostalimi državami. Gospodarsko je začela rasti sredi prejšnjega stoletja, ko je začela izvajati več reform glede neenakosti in kmetijstva. Norvežani trenutno delajo 35 ur na teden, imajo plačane dopuste ter svobodo govora in religije. Čeprav se v veliko stvareh, kot sta brezplačno šolstvo in zdravstvo, Norvežani ne razlikujejo veliko od povprečne evropske države, pa imajo zelo močno demokracijo, ki zagotavlja zadovoljstvo večine državljanov in tako omogoča vodilno stopnjo razvoja.
 
 ```{r mindrz, fig.align='center'}
 mindrz
 ```
 
-Vidimo, da je HDI 5 najšibkejših držav v zadnjih letih strmo naraščal, še vedno pa ne dosega nivoja najbolj razvitih držav. Najbolj se je povzpela **Etiopija**, iz predzadnjega mesta na prvo med temi državami. Je tudi edina, kateri je indeks narasel čez 0.45. Najpočasneje pa se je razvil **Čad**, med temi državami mu je kazalo najbolje, leta 2018 pa je samo pred **Nigrom**, ki je najslabše razvita država še danes. 
+Vidimo, da je HDI petih najšibkejših držav v zadnjih letih strmo naraščal, še vedno pa ne dosega ravni najrazvitejših držav. Najbolj se je povzpela **Etiopija**, s predzadnjega mesta na prvo med temi državami. Je tudi edina, ki je indeks narasel čez 0.45. Najpočasneje pa se je razvil **Čad**, med temi državami mu je kazalo najbolje, leta 2018 pa je samo pred **Nigrom**, ki je najslabše razvita država še danes. 
 
 ```{r negrast, fig.align='center'}
 negrast
 ```
 
-Padec indeksa človekovega razvoja je redek pojav in še to le v zadnjem desetletju. Vidimo lahko, da je vpliv političnih režimov in vojn na civilno prebivalstvo vse večji. V **Libanonu** vlada gospodarska kriza in delež brezposelnosti je 25%, poleg tega pa si še niso opomogli po arabski pomladi. Podobno je leta 2011 indeks začel padati tudi **Libiji** in **Južnemu Sudanu**. **Jemen** je že deseto leto sredi civilne vojne, ki pa je začela tudi lakoto, ki trenutno napada 17 milijonov ljudi. Združeni narodi pa poročajo, da kar 85% prebivalstva potrebuje humanitarno pomoč. V **Venezueli** indeks pada od predsedniških volitev leta 2013, ki so sprožile verigo nasilnih protestov in gospodarsko krizo.
+Padec indeksa človekovega razvoja je redek pojav in še to le v zadnjem desetletju. Vidimo lahko, da je vpliv političnih režimov in vojn na civilno prebivalstvo vse večji. V **Libanonu** vlada gospodarska kriza in delež brezposelnosti je 25 %, poleg tega pa si še niso opomogli po arabski pomladi. Podobno je leta 2011 indeks začel padati tudi **Libiji** in **Južnemu Sudanu**. V **Jemnu** že skoraj deset let poteka državljanska vojna, zaradi česar je lakota v državi vse pogostejša, z njo se srečuje že 17 milijonov ljudi. Združeni narodi poročajo, da kar 85% prebivalstva potrebuje humanitarno pomoč. V **Venezueli** indeks pada od predsedniških volitev leta 2013, ki so sprožile verigo nasilnih protestov in gospodarsko krizo.
 
 ```{r maxdrz, fig.align='center'}
 maxdrz
 ```
 
-Indeks človekovega razvoja pa je naraščal ostalim državam, k čemur sta pripomogla napredek v tehnologiji in zdravstvu. Norveška je vedno bila po razvoju korak pred vsemi. Najmanj stabilna rast je bila v obdobju gospodarske krize, 2009-2013, ko je **Norveški**, **Švedski**, **Združenim državam** in tudi **Avstraliji** indeks nekoliko upadel, a so si od takrat vse opomogle. Nasprotno pa na enem prejšnjih grafov držav z najmanjšim indeksom vpliv ekonomske krize komaj zaznamo. 
+Indeks človekovega razvoja pa je naraščal ostalim državam, k čemur sta pripomogla napredek v tehnologiji in zdravstvu. Norveška je vedno bila po razvoju korak pred vsemi. Najmanj stabilna rast je bila v obdobju gospodarske krize med letoma 2009 in 2013, ko je **Norveški**, **Švedski**, **Združenim državam Amerike** in tudi **Avstraliji** indeks nekoliko upadel, a so si od takrat vse opomogle. Nasprotno pa na prejšnjem grafu držav z najmanjšim indeksom komaj zaznamo vpliv ekonomske krize. 
 
 ```{r zda, fig.align='center'}
 zda
@@ -175,24 +175,24 @@ zda
 
 Leta 1998 je **ZDA** imela višji indeks od Danske, Nemčije, Islandije, Irske in Švice. Veljala je za eno najbolj gospodarsko razvitih držav. Njen indeks je v letih sicer rastel in še danes je gospodarska velesila, a jo je v le dvajsetih letih za sabo pustilo vsaj pet evropskih držav. Sedaj je na zadnjem mestu izmed držav z najboljšim indeksom.
 Prva jo je prehitela Švica, nato Danska in Nemčija, leta 2013 in 2014 pa še Islandija in Irska. 
-Čeprav niso na grafu, so tudi nekatere azijske države, kot sta Hong Kong in Singapur, prehitele Združene države Amerike. V naslednjiem grafu je zato predstavljen prenos moči z zahoda na vzhod.
+Čeprav niso na grafu, so tudi nekatere azijske države, kot sta Hong Kong in Singapur, prehitele Združene države Amerike. V naslednjiem grafu je zato predstavljen prenos moči z Zahoda na Vzhod.
 
 ```{r vzhod, fig.align='center'}
 vzhod
 ```
 
-Še dobrih 10 let nazaj so bile **Združene države** in **Združeno kraljestvo** dve izmed vodilnih držav po indeksu človekovega razvoja. Potem pa je zahod prizadela gospodarska kriza, ki je vzhodne države niso čutile in so se začele vzpenjati ne samo v gospodarstvu, ampak tudi v izobrazbi in zdravstvu, česar povprečje je indeks človekovega razvoja. Kriza je pustila posledice: gospodarsko uspešni zahodni državi je najprej v razvoju prehitel **Singapur**, nato pa še **Hong Kong**. Rast se je v ZDA in VB umirila že prej, glede na trend zadnjih let pa se trenutno umirja tudi rast indeksa Singapurja in Hong Konga.
+Še pred dobrimi desetimi leti so bile **Združene države Amerike** in **Združeno kraljestvo** med vodilnimi državami po indeksu človekovega razvoja. Potem pa je Zahod prizadela gospodarska kriza, ki je vzhodne države niso čutile in so se začele vzpenjati ne samo v gospodarstvu, ampak tudi v izobrazbi in zdravstvu, česar povprečje je indeks človekovega razvoja. Kriza je pustila posledice: gospodarsko uspešni zahodni državi je najprej v razvoju prehitel **Singapur**, nato pa še **Hongkong**. Rast se je v ZDA in VB umirila že prej, glede na trend zadnjih let pa se trenutno umirja tudi rast indeksa Singapurja in Hongkonga.
 
 ```{r zem2018, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
 zem2018
 ```
 
-Zemljevid prikaže indeks človekovega razvoja v letu 2018. Države, obarvane z modro, imajo najnižji indeks, tiste, ki pa so obarvane z rdečo, imajo najvišjega. Zelo dobro se vidijo razlike med Evropo in Severno Ameriko ter Južno Ameriko in Afriko.
+Zemljevid prikaže indeks človekovega razvoja v letu 2018. Države, obarvane z modro, imajo najnižji indeks, tiste z rdečo pa najvišjega. Zelo dobro se vidijo razlike med Evropo in Severno Ameriko ter Južno Ameriko in Afriko.
 
 ### Novi indeks človekovega razvoja
-Novi indeks človekovega razvoja poleg nivoja dohodka, izobrazbe in življenjske dobe upošteva še neenakost med prebivalci v teh treh komponentah, izpust ogljikovega dioksida v državi in število primerov novega koronavirusa na 1000 prebivalcev.
+Novi indeks človekovega razvoja poleg ravni dohodka, izobrazbe in življenjske dobe upošteva še neenakost med prebivalci v teh treh komponentah, izpust ogljikovega dioksida v državi in število primerov novega koronavirusa na 1000 prebivalcev.
 
-Tudi novo dodane spremenljivke vplivajo na človekov razvoj, vendar jih stari indeks ne upošteva.
+Tudi dodane spremenljivke vplivajo na človekov razvoj, vendar jih stari indeks ne upošteva.
 
 ```{r graf.priheko, fig.align='center'}
 graf.priheko1
@@ -204,7 +204,7 @@ Vidimo lahko, da imajo države z višjim prihodkom večinoma tudi višji izpust 
 graf.maxpadec1
 ```
 
-Največ je indeks padel v prikazanih državah, seveda zaradi različnih razlogov. Med državami nas tudi nekatere presenetijo, na primer Hong Kong, Lihtenštajn in Češka. Za države bližnjega vzhoda, kot so Katar, Bahrajn, Palestina in Združeni Arabski Emirati pa predvidevamo, da je zaradi politike in religije v teh državah padec povzročil indeks neenakosti.
+Najbolj je padel indeks v prikazanih državah, seveda zaradi različnih razlogov. Med državami nas tudi nekatere presenetijo, na primer Hongkong, Lihtenštajn in Češka. Za države Bližnjega vzhoda, kot so Katar, Bahrajn, Palestina in Združeni arabski emirati pa predvidevamo, da je zaradi politike in religije v teh državah padec povzročil indeks neenakosti.
 
 ```{r graf.maxpadec2, fig.align='center'}
 graf.maxpadec3
@@ -223,13 +223,13 @@ Vidimo, da je indeks ponekod tudi zrastel, vendar pa v nobeni od držav tako dra
 graf.novhdi1
 ```
 
-Poglejmo še rast novega indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Čeprav je razumljivo padel zaradi ekološkega odtisa in velikega števila primerov koronavirusa, padec nikjer ni bil dramatičen, s česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
-Najbolj izstopajo Združene države Amerike - v tej državi je indeks padel največ in najnižje, celo pod vrednost 0.75.
+Graf prikazuje rast novega indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Čeprav je razumljivo padel zaradi ekološkega odtisa in velikega števila primerov koronavirusa, padec nikjer ni bil velik, s česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
+Najbolj izstopajo Združene države Amerike - v tej državi je indeks padel največ in najnižje, celo pod vrednost 0,75.
 
 ```{r graf.novhdi2, fig.align='center'}
 graf.novhdi3
 ```
 
-Čeprav imajo prikazane države svoj indeks človekovega razvoja višji od vseh ostalih držav, so vseeno razlogi za padec v HDI-ju različni. Prve štiri države na grafu imajo zelo visoke nove indekse, z izjemo avstralskega ekološkega indeksa. Razlike med prebivalci so po indeksu neenakosti majhne, države pa se tudi trudijo ohranjati čim višji indeks COVID, vodi Avstralija, ki ima očitno daleč najmanj primerov na prebivalca.
+Čeprav imajo prikazane države svoj indeks človekovega razvoja višji od vseh ostalih držav, so vseeno razlogi za padec HDI-ja različni. Prve štiri države na grafu imajo zelo visoke nove indekse, z izjemo avstralskega ekološkega indeksa. Razlike med prebivalci so po indeksu neenakosti majhne, države pa se tudi trudijo ohranjati čim višji indeks COVID, vodi Avstralija, ki ima očitno daleč najmanj primerov na prebivalca.
 Ostalim trem državam, Sloveniji, Švici in ZDA pa nizek indeks COVID zelo zmanjšuje novi HDI. **Slovenija** ima izmed prikazanih držav najnižjega in se niti ne more primerjati z Norveško, Irsko, Nemčijo in Avstralijo.
-**ZDA** pa imajo poleg indeksa COVID od vseh ostalih držav manjša tudi ostala dva indeksa. Razlika je zelo očitna in kaže na veliko večjo neenakost in ekološki odtis v ZDA kot pa v drugih podobno razvitih državah.
+**ZDA** pa imajo poleg indeksa COVID od vseh ostalih držav nižja tudi indeksa neenakosti in izpusta CO2. Razlika je zelo očitna in kaže na veliko večjo neenakost in ekološki odtis v ZDA kot pa v drugih podobno razvitih državah.
