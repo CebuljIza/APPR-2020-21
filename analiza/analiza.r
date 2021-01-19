@@ -1,11 +1,24 @@
-# # 4. faza: Analiza podatkov
-# 
-# podatki <- obcine %>% transmute(obcina, povrsina, gostota,
-#                                 gostota.naselij=naselja/povrsina) %>%
-#   left_join(povprecja, by="obcina")
-# row.names(podatki) <- podatki$obcina
-# podatki$obcina <- NULL
-# 
-# # Število skupin
-# n <- 5
-# skupine <- hclust(dist(scale(podatki))) %>% cutree(n)
+# 4. faza: Analiza podatkov
+
+podatki <- HDI_drzave_leta %>% 
+  filter(Drzava == "Slovenia")
+
+# Regresija oz. napoved
+
+quadratic <- lm(data = podatki, Stevilo ~ I(Leto) + I(Leto^2))
+leta <- data.frame(Leto=seq(2019, 2025, 1))
+prediction <- mutate(leta, Stevilo=predict(quadratic, leta))
+
+regresija <- podatki %>% 
+  ggplot(aes(x=Leto, y=Stevilo)) +
+  geom_smooth(method="lm", fullrange=TRUE, color="red", formula=y ~ poly(x,2,raw=TRUE)) +
+  geom_point(size=2, color="blue") +
+  geom_point(data=prediction %>% filter(Leto >= 2019), color="green3", size=3) +
+  scale_x_continuous('Leto', breaks = seq(1998, 2025, 1), limits = c(1998,2025)) +
+  ylab("HDI") +
+  labs(title = "Napoved HDI") +
+  theme(axis.text.x=element_text(angle=90, size=10, vjust=0.5))
+
+# Ta graf bom vključila v Shiny aplikacijo.
+
+

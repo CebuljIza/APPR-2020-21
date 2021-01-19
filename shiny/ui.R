@@ -1,17 +1,28 @@
 library(shiny)
 
 shinyUI(fluidPage(
-  
-  titlePanel("Slovenske občine"),
-  
-  tabsetPanel(
-      tabPanel("Velikost družine",
-               DT::dataTableOutput("druzine")),
-      
-      tabPanel("Število naselij",
-               sidebarPanel(
-                  uiOutput("pokrajine")
-                ),
-               mainPanel(plotOutput("naselja")))
-    )
-))
+  navbarPage("Analiza indeksa",
+             tabPanel("Rast po letih",
+                      titlePanel("Rast indeksa po letih"),
+                      sidebarPanel(
+                        selectInput(inputId = "drzava1", 
+                                    label = "Izberi državo",
+                                    choices = unique(HDI_drzave_leta$Drzava))),
+                      mainPanel(plotOutput("drzava1"))),
+             
+             tabPanel("Analiza novega HDI",
+                      titlePanel("Razlogi za dvig ali padec indeksa"),
+                      sidebarPanel(
+                        selectInput(inputId = "drzava2",
+                                    label = "Izberi državo",
+                                    choices = unique(HDI_drzave_leta$Drzava))),
+                      mainPanel(plotOutput("drzava2"))),
+             
+             tabPanel("Napoved",
+                      titlePanel("Napoved HDI"),
+                      sidebarPanel(
+                        selectInput(inputId = "drzava3",
+                                    label = "Izberi državo",
+                                    choices = unique(HDI_drzave_leta$Drzava))),
+                      mainPanel(plotOutput("drzava3")))
+)))
