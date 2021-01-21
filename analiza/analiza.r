@@ -1,17 +1,17 @@
 # 4. faza: Analiza podatkov
 
 podatki <- HDI_drzave_leta %>% 
-  filter(Drzava == "Slovenia")
+  filter(Drzava == "Germany")
 
 # Regresija oz. napoved
 
-quadratic <- lm(data = podatki, Stevilo ~ I(Leto) + I(Leto^2))
+quadratic <- lm(data = podatki, Stevilo ~ I(Leto))
 leta <- data.frame(Leto=seq(2019, 2025, 1))
 prediction <- mutate(leta, Stevilo=predict(quadratic, leta))
 
 regresija <- podatki %>% 
   ggplot(aes(x=Leto, y=Stevilo)) +
-  geom_smooth(method="lm", fullrange=TRUE, color="red", formula=y ~ poly(x,2,raw=TRUE)) +
+  geom_smooth(method="lm", fullrange=TRUE, color="red", formula=y ~ x) +
   geom_point(size=2, color="blue") +
   geom_point(data=prediction %>% filter(Leto >= 2019), color="green3", size=3) +
   scale_x_continuous('Leto', breaks = seq(1998, 2025, 1), limits = c(1998,2025)) +

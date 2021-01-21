@@ -2,7 +2,6 @@
 title: "Analiza indeksa človekovega razvoja"
 subtitle: "Poročilo pri predmetu Analiza podatkov s programom R"
 author: "Iza Čebulj"
-date: 19-01-2021
 output:
   html_document: default
   pdf_document:
@@ -34,7 +33,7 @@ Kljub temu, da je to zelo napreden indikator blagostanja v državi, ima nekatere
 - **ekološkega odtisa** - analiza je pokazala, da imajo države z visokim HDI tudi zelo visok izpust ogljikovega dioksida, kar pa nikakor ni dobro za razvoj in blagostanje v prihodnosti, in 
 - **stanja zdravstvenega sistema**, ki je v času pandemije  novega koronavirusa zelo dobro nakazal gospodarski napredek in stabilnost države.
 
-Najprej me bo zanimalo, kako se v indeksu primerjajo gospodarsko močne države in države, ki jih pestijo revščina in vojne. Zanimiva pojava v zadnjem desetletju sta prenos moči z zahoda na vzhod in negativna rast človekovega razvoja v nekaterih državah Severne Afrike in Bližnjega vzhoda ter v Venezueli. Poleg analize HDI zadnjih 20 let po državah bom v projektu izračunala tudi novi HDI, ki bo upošteval neenakost med prebivalci, izpuste CO2 in število COVID primerov na 1000 prebivalcev. 
+Najprej me bo zanimalo, kako se v indeksu primerjajo gospodarsko močne države in države, ki jih pestijo revščina in vojne. Zanimiva pojava v zadnjem desetletju sta prenos moči z Zahoda na Vzhod in negativna rast človekovega razvoja v nekaterih državah Severne Afrike in Bližnjega vzhoda ter v Venezueli. Poleg analize HDI zadnjih 20 let po državah bom v projektu izračunala tudi novi HDI, ki bo upošteval neenakost med prebivalci, izpuste CO2 in število COVID primerov na 1000 prebivalcev. 
 
 ### Podatkovni viri
 
@@ -103,7 +102,7 @@ Podatkso zbrani v CSV razpredelnicah v obliki *tidy data*.
   - `Vrednost` - vrednost indeksa
 
   
-**Formula za izračun indeksov neenakosti, izpustov in COVID smrti:**
+**Formula za izračun indeksov neenakosti, izpustov in COVID primerov:**
 $$INDEX = 1 - \frac{vrednost - vrednost_{min}}{vrednost_{max} - vrednost_{min}}$$
 Indeks je 1, ko je vrednost najmanjša, in 0, ko je vrednost največja.
 
@@ -116,7 +115,7 @@ source("vizualizacija/vizualizacija1.r", encoding = "UTF-8")
 maxdrz
 ```
 
-Na grafu lahko vidimo, kako je indeks človekovega razvoja naraščal v državah z najvišjim indeksom in v Sloveniji v zadnjih dvajsetih letih.
+Na grafu lahko vidimo, kako je indeks človekovega razvoja naraščal v državah z najvišjim indeksom in v **Sloveniji** v zadnjih dvajsetih letih.
 **Norveška** glede na razvoj prednjači pred vsemi ostalimi državami. K rasti indeksa sta pripomogla predvsem napredek v tehnologiji in zdravstvu. Najmanj stabilna rast je bila v obdobju gospodarske krize med letoma 2009 in 2013, ko je HDI znižala komponenta indeksa dohodka, a so si od takrat vse države opomogle.
 
 
@@ -132,7 +131,7 @@ zda
 
 Leta 1998 je **ZDA** imela višji indeks od Danske, Nemčije, Islandije, Irske in Švice. Veljala je za eno najbolj gospodarsko razvitih držav. Njen indeks je v letih sicer rastel in še danes je gospodarska velesila, a jo je v le dvajsetih letih za sabo pustilo vsaj pet prikazanih evropskih držav. Sedaj je na zadnjem mestu izmed držav z najboljšim indeksom.
 
-Tudi nekatere azijske države, kot sta Hong Kong in Singapur, so prehitele Združene države Amerike. V naslednjiem grafu je zato predstavljen prenos moči z Zahoda na Vzhod.
+Tudi nekatere azijske države, kot sta Hongkong in Singapur, so prehitele Združene države Amerike. V naslednjem grafu je zato predstavljen prenos moči z Zahoda na Vzhod.
 
 ```{r vzhod, fig.align='center'}
 vzhod
@@ -161,20 +160,20 @@ Vidimo lahko, da imajo države z višjim prihodkom večinoma tudi višji izpust 
 graf.maxpadec1
 ```
 
-Najbolj je padel indeks v prikazanih državah, seveda zaradi različnih razlogov. Med državami nas tudi nekatere presenetijo, na primer Hongkong, Lihtenštajn in Češka. Za države Bližnjega vzhoda, kot so Katar, Bahrajn, Palestina in Združeni arabski emirati pa predvidevamo, da je zaradi vpliva politike in religije v teh državah padec povzročil indeks neenakosti.
+Najbolj je padel indeks v prikazanih državah, seveda zaradi različnih razlogov. Med državami nas tudi nekatere presenetijo, na primer Hongkong, Lihtenštajn in Češka. Za države Bližnjega vzhoda, kot so Katar, Bahrajn, Palestina in Združeni arabski emirati, pa predvidevamo, da je zaradi vpliva politike in religije v teh državah padec povzročil indeks neenakosti.
 
 ```{r graf.maxpadec2, fig.align='center'}
 graf.maxpadec3
 ```
 
-Res, pri **Bahrainu** in **Katarju** vidimo, da imata skoraj ničeln indeks neenakosti. Katar ima poleg tega še zelo velik izpust ogljikovega dioksida in zato nizek ekološki indeks. V **Hong Kongu** in **Južni Koreji** sta nizka tako ekološki indeks kot tudi indeks COVID, ki nam pove, da sta državi imeli zelo velik delež pozitivnih primerov koronavirusa.
+Res, pri **Bahrainu** in **Katarju** vidimo, da imata skoraj ničeln indeks neenakosti. Katar ima poleg tega še zelo velik izpust ogljikovega dioksida in zato nizek ekološki indeks. V **Hongkongu** in **Južni Koreji** sta nizka tako ekološki indeks kot tudi indeks COVID, ki nam pove, da sta državi imeli zelo velik delež pozitivnih primerov koronavirusa.
 **Lihtenštajn** ima zelo nizek indeks neenakosti. Pri tem moramo upoštevati, da indeks ne meri bogastva, izobraženosti ali zdravja države, ampak razlike med njenimi najbogatejšimi in najbolj izobraženimi ter najrevnejšimi in najmanj izobraženimi. Tako bo v primeru, da so vsi prebivalci zelo revni, indeks lahko še vseeno zelo visok. V Lihtenštajnu so razlike velike, ker v zadnjem času beležijo veliko priseljencev, za katere pa je več možnosti, da bodo imeli nizek prihodek in manj izobrazbe, sploh pa v primerjavi z enimi izmed najbogatejših prebivalcev na svetu.
 
 ```{r graf.novhdi1, fig.align='center'}
 graf.novhdi1
 ```
 
-Graf prikazuje rast novega indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Padec nikjer ni bil velik, s česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
+Graf prikazuje rast novega indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Padec nikjer ni bil velik, iz česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
 Najbolj izstopajo Združene države Amerike - v tej državi je indeks padel največ in najnižje, celo pod vrednost 0,75.
 
 ```{r graf.novhdi2, fig.align='center'}
@@ -190,5 +189,3 @@ Kot zaključek pa lahko bralec še uporabi aplikacijo, v kateri sam izbere drža
 ```{r shiny, echo=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))
 ```
-
-Če pri napovedi izberemo Slovenijo, lahko vidimo, da bo v naši državi v naslednjih letih indeks človekovega razvoja padal.

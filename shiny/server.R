@@ -24,6 +24,7 @@ shinyServer(function(input, output) {
       aes(x=Drzava, y=Vrednost, fill=Indeks) +
       geom_col(position="dodge") +
       ylab("Vrednost") +
+      ylim(0, 1) +
       theme(legend.text=element_text(size=15),
             axis.text.x=element_text(size=20),
             axis.text.y=element_text(size=15))
@@ -36,13 +37,13 @@ shinyServer(function(input, output) {
     podatki <- HDI_drzave_leta %>% 
       filter(Drzava == input$drzava3)
     
-    quadratic <- lm(data = podatki, Stevilo ~ I(Leto) + I(Leto^2))
+    quadratic <- lm(data = podatki, Stevilo ~ I(Leto))
     leta <- data.frame(Leto=seq(2019, 2025, 1))
     prediction <- mutate(leta, Stevilo=predict(quadratic, leta))
     
     regresija <- podatki %>% 
       ggplot(aes(x=Leto, y=Stevilo)) +
-      geom_smooth(method="lm", fullrange=TRUE, color="red", formula=y ~ poly(x,2,raw=TRUE)) +
+      geom_smooth(method="lm", fullrange=TRUE, color="red", formula=y ~ x) +
       geom_point(size=2, color="blue") +
       geom_point(data=prediction %>% filter(Leto >= 2019), color="green3", size=3) +
       scale_x_continuous('Leto', breaks = seq(1998, 2025, 1), limits = c(1998,2025)) +
