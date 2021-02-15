@@ -64,7 +64,9 @@ neenakost <- uvozi.csv("podatki/coefficient_of_human_inequality.csv", st.ineq, 2
   rename("Koeficient" = "Indeks")
 
 ### nov stolpec - Indeks neenakosti
-neenakost$"Indeks_neenakosti" <- round(1 - ((neenakost$Koeficient - min(neenakost$Koeficient, na.rm = TRUE) + 0.01)/(max(neenakost$Koeficient, na.rm = TRUE) - min(neenakost$Koeficient, na.rm = TRUE))), digits = 2)
+neenakost$"Indeks_neenakosti" <- round(1 - ((neenakost$Koeficient - min(neenakost$Koeficient, na.rm = TRUE))/(max(neenakost$Koeficient, na.rm = TRUE) - min(neenakost$Koeficient, na.rm = TRUE))), digits = 3)
+
+neenakost[neenakost$Drzava == "Comoros",]$Indeks_neenakosti <- 0.01
 
 # Funkcija za uvoz datoteke 'co2 emissions'
 uvozi.co2.csv <- function(tabela, stolpci, skip, max) {
@@ -88,7 +90,9 @@ st.co2 <- c("Drzava", "Code", "Leto", "CO2_izpust_per_capita")
 izpusti <- uvozi.co2.csv("podatki/co2_emissions_per_capita.csv", st.co2, 1, Inf) 
 
 ### nov stolpec - Ekološki indeks
-izpusti$"Ekoloski_indeks" <- round(1 - ((izpusti$"CO2_izpust_per_capita" - min(izpusti$"CO2_izpust_per_capita", na.rm = TRUE) + 0.01)/(max(izpusti$"CO2_izpust_per_capita", na.rm = TRUE) - min(izpusti$"CO2_izpust_per_capita", na.rm = TRUE))), digits = 2)
+izpusti$"Ekoloski_indeks" <- round(1 - ((izpusti$"CO2_izpust_per_capita" - min(izpusti$"CO2_izpust_per_capita", na.rm = TRUE))/(max(izpusti$"CO2_izpust_per_capita", na.rm = TRUE) - min(izpusti$"CO2_izpust_per_capita", na.rm = TRUE))), digits = 3)
+
+izpusti[izpusti$Drzava == "Qatar",]$"Ekoloski_indeks" <- 0.01
 
 # Funkcija za uvoz datoteke WHO-COVID-19-global-data
 uvozi.who.csv <- function(tabela, stolpci, skip, max) {
@@ -99,90 +103,77 @@ uvozi.who.csv <- function(tabela, stolpci, skip, max) {
                    n_max = max,
                    na = c("", " ", "-", ".."))
   uvoz <- uvoz %>% 
-    select("Drzava", "Stevilo_primerov")
+    select("Drzava", "Stevilo_primerov_na_milijon")
   uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\(.*?\\) *", "")
   return(uvoz)
 }
 
 ## 7. tabela (COVID data)
-st.cov <- c("Drzava","WHO_Region" ,"Stevilo_primerov" ,"Cases_per_1_million_population" ,"Cases_in_last_7_days","Cases_in_last_24_hours","Deaths-cumulative_total","Deaths_per_1_million_population","Deaths_in_last_7_days","Deaths_in_last_24_hours","Transmission_Classification")
-covid <- uvozi.who.csv("podatki/WHO-COVID-19-global-data.csv", st.cov, 2, Inf)
+st.cov <- c("Drzava","WHO_Region" ,"Stevilo_primerov" ,"Stevilo_primerov_na_milijon" ,"Cases_in_last_7_days","Cases_in_last_24_hours","Deaths-cumulative_total","Deaths_per_1_million_population","Deaths_in_last_7_days","Deaths_in_last_24_hours","Transmission_Classification")
+covid <- uvozi.who.csv("podatki/WHO-COVID-19-global-data.csv", st.cov, 2, Inf) %>% drop_na()
 
-# Uvoz iz HTML (Prebivalstvo)
-uvozi.html <- function() {
-  url <- "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
-  stran <- read_html(url) %>% html_table(fill = TRUE)
-  uvoz <- stran[[1]]
-  uvoz <- uvoz %>%
-    rename("Drzava" = "Country(or dependent territory)") %>%
-    rename("Prebivalstvo" = "Population") %>%
-    select("Drzava", "Prebivalstvo")
-  
-  uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\(.*?\\) *", "")
-  uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\[.*?\\] *", "")
-  
-  uvoz$Prebivalstvo <- as.numeric(gsub(",", "", uvoz$Prebivalstvo))
-  return(uvoz)
-}
+covid$"Indeks_COVID" <- round((1 - ((covid$"Stevilo_primerov_na_milijon" - min(covid$"Stevilo_primerov_na_milijon", na.rm = TRUE)) / (max(covid$"Stevilo_primerov_na_milijon", na.rm = TRUE) - min(covid$"Stevilo_primerov_na_milijon", na.rm = TRUE)))), digits = 5)
 
-## 8. tabela (Prebivalstvo po državah)
-prebivalstvo <- uvozi.html()
+covid[covid$Drzava == "Andorra",]$"Indeks_COVID" <- 0.01
 
-## 9. tabela (Število COVID smrti na prebivalca - združimo tabeli covid in prebivalstvo)
-
-### Nekatera imena moramo popraviti, da se bosta tabeli ujemali
-prebivalstvo[prebivalstvo$Drzava == "Brunei",]$Drzava <- "Brunei Darussalam"
-prebivalstvo[prebivalstvo$Drzava == "Cape Verde",]$Drzava <- "Cabo Verde"
-prebivalstvo[prebivalstvo$Drzava == "Ivory Coast",]$Drzava <- "Côte d'Ivoire"
-prebivalstvo[prebivalstvo$Drzava == "Czech Republic",]$Drzava <- "Czechia"
-prebivalstvo[prebivalstvo$Drzava == "F.S. Micronesia",]$Drzava <- "Micronesia"
-prebivalstvo[prebivalstvo$Drzava == "Russia",]$Drzava <- "Russian Federation"
-prebivalstvo[prebivalstvo$Drzava == "Syria",]$Drzava <- "Syrian Arab Republic"
-prebivalstvo[prebivalstvo$Drzava == "Vietnam",]$Drzava <- "Viet Nam"
-
-covid[covid$Drzava == "Democratic Republic of the Congo",]$Drzava <- "DR Congo"
+### Nekatera imena moramo ročno popraviti, da se bodo tabele ujemale
+izpusti[izpusti$Drzava == "Brunei",]$Drzava <- "Brunei Darussalam"
+izpusti[izpusti$Drzava == "Cape Verde",]$Drzava <- "Cabo Verde"
+izpusti[izpusti$Drzava == "Cote d'Ivoire",]$Drzava <- "Côte d'Ivoire"
+izpusti[izpusti$Drzava == "Czech Republic",]$Drzava <- "Czechia"
+izpusti[izpusti$Drzava == "Russia",]$Drzava <- "Russian Federation"
+izpusti[izpusti$Drzava == "Syria",]$Drzava <- "Syrian Arab Republic"
+izpusti[izpusti$Drzava == "Vietnam",]$Drzava <- "Viet Nam"
 covid[covid$Drzava == "Kosovo[1]",]$Drzava <- "Kosovo"
-covid[covid$Drzava == "occupied Palestinian territory, including east Jerusalem",]$Drzava <- "Palestine"
-covid[covid$Drzava == "Republic of Korea",]$Drzava <- "South Korea"
+covid[covid$Drzava == "occupied Palestinian territory, including east Jerusalem",]$Drzava <- "Palestine, State of"
+izpusti[izpusti$Drzava == "Palestine",]$Drzava <- "Palestine, State of"
+covid[covid$Drzava == "Republic of Korea",]$Drzava <- "Korea"
+izpusti[izpusti$Drzava == "South Korea",]$Drzava <- "Korea"
 covid[covid$Drzava == "Republic of Moldova",]$Drzava <- "Moldova"
 covid[covid$Drzava == "The United Kingdom",]$Drzava <- "United Kingdom"
 covid[covid$Drzava == "United Republic of Tanzania",]$Drzava <- "Tanzania"
 covid[covid$Drzava == "United States of America",]$Drzava <- "United States"
+izpusti[izpusti$Drzava == "Timor",]$Drzava <- "Timor-Leste"
 
-skupaj <- left_join(covid,prebivalstvo,by = "Drzava")
-skupaj <- skupaj %>%
-  drop_na()
-
-### nov stolpec
-skupaj$"Stevilo_primerov_na_1000_prebivalcev" <- round(((skupaj$"Stevilo_primerov" / skupaj$"Prebivalstvo") * 1000), digits = 2)
-
-### nov stolpec z indeksom COVID
-skupaj$"Indeks_COVID" <- round((1 - ((skupaj$"Stevilo_primerov_na_1000_prebivalcev" - min(skupaj$"Stevilo_primerov_na_1000_prebivalcev")) / (max(skupaj$"Stevilo_primerov_na_1000_prebivalcev") - min(skupaj$"Stevilo_primerov_na_1000_prebivalcev")))), digits = 2)
-
-## 10. tabela (Združimo tabele z indeksi izobrazbe, življenja, prihodka, neenakosti, izpustov in COVIDa)
+## 8. tabela (Združimo tabele z indeksi izobrazbe, življenja, prihodka, neenakosti, izpustov in COVIDa)
 nov.hdi <- left_join(izobrazba, zivljenje, by='Drzava') %>%
   left_join(., prihodek, by='Drzava') %>%
   left_join(., neenakost, by="Drzava") %>%
   left_join(., izpusti, by="Drzava") %>%
-  left_join(., skupaj, by="Drzava") %>%
+  left_join(., covid, by="Drzava") %>%
   select("Drzava", "Indeks_izobrazbe", "Indeks_zivljenja", "Indeks_prihodka", "Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")
 
-#### popravim tabelo za računanje tam, kjer so vrednosti indeksov 0 ali na
-nov.hdi[nov.hdi$Drzava == "Comoros",]$"Indeks_neenakosti" <- 0.01
-nov.hdi[nov.hdi$Drzava == "Qatar",]$"Ekoloski_indeks" <- 0.01
-nov.hdi[nov.hdi$Drzava == "Andorra",]$"Indeks_COVID" <- 0.01
-nov.hdi[is.na(nov.hdi)] <- 0.01
-
 ### nova stolpca za star in nov HDI
-nov.hdi$"Stari_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka`) ** (1/3), digits = 2)
-nov.hdi$"Novi_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka` * nov.hdi$`Indeks_neenakosti` * nov.hdi$`Ekoloski_indeks` * nov.hdi$`Indeks_COVID`) ** (1/6), digits = 2)
+nov.hdi$"Stari_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka`) ** (1/3), digits = 3)
+nov.hdi$"Novi_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka` * nov.hdi$`Indeks_neenakosti` * nov.hdi$`Ekoloski_indeks` * nov.hdi$`Indeks_COVID`) ** (1/6), digits = 3)
 
-### popravki
-nov.hdi[nov.hdi$Drzava == "Korea", ]$Drzava <- "South Korea"
-DR.Congo <- data.frame("DR Congo", 0.459, 0.621, 0.314, 0.33, 0.98, 0.98, 0.46, 0.56)
-names(DR.Congo) <- c("Drzava", "Indeks_izobrazbe", "Indeks_zivljenja", "Indeks_prihodka", "Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID", "Stari_HDI", "Novi_HDI")
-nov.hdi <- nov.hdi %>% rbind(nov.hdi, DR.Congo) %>% 
-  distinct(Drzava, .keep_all = TRUE)
+### Popravimo, kjer je za isto državo več vrstic 
+### Filtriramo glede na Indeks_neenakosti, kar sicer povzroči izbris držav, ki tega podatka nimajo, iz tabele, vendar bomo v nadaljevanju tako ali tako analizirali le tiste države, ki imajo vse podatke
+nov.hdi <- nov.hdi %>% 
+  group_by(Drzava) %>% 
+  filter(Indeks_neenakosti == max(Indeks_neenakosti)) %>% 
+  distinct
 
-## 11. tabela (Tabelo nov.hdi prečistimo in spravimo v tidy data)
+## 9. tabela (Tabelo nov.hdi prečistimo in spravimo v tidy data)
 nov.hdi.tidy <- nov.hdi %>% pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
+
+### Sem potrebovala pri COVID tabeli, ko nisem uporabila stolpca 'število primerov na milijon prebivalcev', je pa to koda za uvoz iz html-ja
+###   # Uvoz iz HTML (Prebivalstvo)
+###   uvozi.html <- function() {
+###     url <- "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
+###     stran <- read_html(url) %>% html_table(fill = TRUE)
+###     uvoz <- stran[[1]]
+###     uvoz <- uvoz %>%
+###       rename("Drzava" = "Country(or dependent territory)") %>%
+###       rename("Prebivalstvo" = "Population") %>%
+###       select("Drzava", "Prebivalstvo")
+###     
+###     uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\(.*?\\) *", "")
+###     uvoz$Drzava <- str_replace(uvoz$Drzava, " *\\[.*?\\] *", "")
+###     
+###     uvoz$Prebivalstvo <- as.numeric(gsub(",", "", uvoz$Prebivalstvo))
+###     return(uvoz)
+###   }
+###   
+###   ## tabela (Prebivalstvo po državah)
+###   prebivalstvo <- uvozi.html()

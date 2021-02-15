@@ -81,7 +81,7 @@ graf.maxpadec <- maxpadec1 %>%
 graf.maxpadec1 <- graf.maxpadec %>% ggplotly()
 
 graf.maxpadec2 <- maxpadec1 %>%
-  filter(Drzava %in% c("Hong Kong, China", "Qatar", "Bahrain", "South Korea", "Liechtenstein"),
+  filter(Drzava %in% c("Belgium", "Czechia", "Luxembourg", "Netherlands", "Switzerland", "Slovenia", "United States"),
          Indeks %in% c("Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")) %>%
   ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
   geom_col(position="dodge") +

@@ -33,7 +33,7 @@ Kljub temu, da je to zelo napreden indikator blagostanja v državi, ima nekatere
 - **ekološkega odtisa** - analiza je pokazala, da imajo države z visokim HDI tudi zelo visok izpust ogljikovega dioksida, kar pa nikakor ni dobro za razvoj in blagostanje v prihodnosti, in 
 - **stanja zdravstvenega sistema**, ki je v času pandemije  novega koronavirusa zelo dobro nakazal gospodarski napredek in stabilnost države.
 
-Najprej me bo zanimalo, kako se v indeksu primerjajo gospodarsko močne države in države, ki jih pestijo revščina in vojne. Zanimiva pojava v zadnjem desetletju sta prenos moči z Zahoda na Vzhod in negativna rast človekovega razvoja v nekaterih državah Severne Afrike in Bližnjega vzhoda ter v Venezueli. Poleg analize HDI zadnjih 20 let po državah bom v projektu izračunala tudi novi HDI, ki bo upošteval neenakost med prebivalci, izpuste CO2 in število COVID primerov na 1000 prebivalcev. 
+Najprej me bo zanimalo, kako se v indeksu primerjajo gospodarsko močne države in države, ki jih pestijo revščina in vojne. Zanimiva pojava v zadnjem desetletju sta prenos moči z Zahoda na Vzhod in negativna rast človekovega razvoja v nekaterih državah Severne Afrike in Bližnjega vzhoda ter v Venezueli. Poleg analize HDI zadnjih 20 let po državah bom v projektu izračunala tudi novi HDI, ki bo upošteval neenakost med prebivalci, izpuste CO2 in število COVID primerov. 
 
 ### Podatkovni viri
 
@@ -76,17 +76,9 @@ Podatkso zbrani v CSV razpredelnicah v obliki *tidy data*.
   - `Ekoloski_indeks` - indeks, izračunan glede na izpust po formuli, podani spodaj
 7. `covid` - podatki o številu primerov novega koronavirusa
   - `Drzava` - ime države
-  - `Stevilo_primerov` - število primerov za državo, kumulativno, za 1. januar 2021
-8. `prebivalstvo` - podatki o prebivalstvu po državah
-  - `Drzava` - ime države
-  - `Prebivalstvo` - število prebivalcev v državi
-9. `skupaj` - Število COVID primerov na 1000 prebivalcev - združimo tabeli covid in prebivalstvo
-  - `Drzava` - ime države
-  - `Stevilo_primerov` - število primerov za državo, kumulativno
-  - `Prebivalstvo` - število prebivalcev v državi
-  - `Stevilo_primerov_na_1000_prebivalcev` - število primerov na 1000 prebivalcev
+  - `Stevilo_primerov_na_milijon` - število primerov za državo, kumulativno na milijon prebivalcev, za 1. januar 2021
   - `Indeks_COVID` - indeks, izračunan glede na število primerov po formuli, podani spodaj
-10. `nov.hdi` - tabela s šestimi indeksi in izračunanim starim in novim HDI-jem
+8. `nov.hdi` - tabela s šestimi indeksi in izračunanim starim in novim HDI-jem
   - `Drzava` - ime države
   - `Indeks_izobrazbe` - indeks izobrazbe v državi
   - `Indeks_zivljenja` - indeks pričakovane življenjske dobe
@@ -96,7 +88,7 @@ Podatkso zbrani v CSV razpredelnicah v obliki *tidy data*.
   - `Indeks_COVID` - indeks, izračunan glede na število primerov po formuli, podani spodaj
   - `Stari_HDI` - indeks človekovega razvoja, izračunan kot geometrijsko povprečje prvih treh indeksov
   - `Novi_HDI` - nov indeks človekovega razvoja, izračunan kot geometrijsko povprečje vseh šestih indeksov
-11. `nov.hdi.tidy` - tabela nov.hdi v tidy data
+9. `nov.hdi.tidy` - tabela nov.hdi v tidy data
   - `Drzava` - ime države
   - `Indeks` - vrsta indeksa
   - `Vrednost` - vrednost indeksa
@@ -146,9 +138,9 @@ zem2018
 Zemljevid prikaže indeks človekovega razvoja v letu 2018. Države, obarvane z modro, imajo najnižji indeks, tiste z rdečo pa najvišjega. Zelo dobro se vidijo razlike med Evropo in Severno Ameriko ter Južno Ameriko in Afriko.
 
 # Novi indeks človekovega razvoja
-Novi indeks človekovega razvoja poleg ravni dohodka, izobrazbe in življenjske dobe upošteva še neenakost med prebivalci v teh treh komponentah, izpust ogljikovega dioksida v državi in število primerov novega koronavirusa na 1000 prebivalcev.
+Novi indeks človekovega razvoja poleg ravni dohodka, izobrazbe in življenjske dobe upošteva še neenakost med prebivalci v teh treh komponentah, izpust ogljikovega dioksida v državi in število primerov novega koronavirusa na 1 milijon prebivalcev.
 
-Tudi dodane spremenljivke vplivajo na človekov razvoj, vendar jih stari indeks ne upošteva.
+Tudi dodane spremenljivke vplivajo na človekov razvoj, vendar jih stari indeks ne upošteva. Pri izračunu novega indeksa delo otežuje pomanjkanje podatkov za te tri komponente v nekaj državah, zato bom v nadaljevanju analizirala samo države, za katere so podatki znani. 
 
 ```{r graf.priheko, fig.align='center'}
 graf.priheko1
@@ -160,28 +152,13 @@ Vidimo lahko, da imajo države z višjim prihodkom večinoma tudi višji izpust 
 graf.maxpadec1
 ```
 
-Najbolj je padel indeks v prikazanih državah, seveda zaradi različnih razlogov. Med državami nas tudi nekatere presenetijo, na primer Hongkong, Lihtenštajn in Češka. Za države Bližnjega vzhoda, kot so Katar, Bahrajn, Palestina in Združeni arabski emirati, pa predvidevamo, da je zaradi vpliva politike in religije v teh državah padec povzročil indeks neenakosti.
+Najbolj je padel indeks v prikazanih državah, seveda zaradi različnih razlogov. Presenetljivo je, da indeks največ pade ravno državam, ki spadajo med bolj razvite, to so Belgija, Češka, Lukseburg, Nizozemska, Slovenija, Švica in Združene države Amerike.
 
 ```{r graf.maxpadec2, fig.align='center'}
 graf.maxpadec3
 ```
 
-Res, pri **Bahrainu** in **Katarju** vidimo, da imata skoraj ničeln indeks neenakosti. Katar ima poleg tega še zelo velik izpust ogljikovega dioksida in zato nizek ekološki indeks. V **Hongkongu** in **Južni Koreji** sta nizka tako ekološki indeks kot tudi indeks COVID, ki nam pove, da sta državi imeli zelo velik delež pozitivnih primerov koronavirusa.
-**Lihtenštajn** ima zelo nizek indeks neenakosti. Pri tem moramo upoštevati, da indeks ne meri bogastva, izobraženosti ali zdravja države, ampak razlike med njenimi najbogatejšimi in najbolj izobraženimi ter najrevnejšimi in najmanj izobraženimi. Tako bo v primeru, da so vsi prebivalci zelo revni, indeks lahko še vseeno zelo visok. V Lihtenštajnu so razlike velike, ker v zadnjem času beležijo veliko priseljencev, za katere pa je več možnosti, da bodo imeli nizek prihodek in manj izobrazbe, sploh pa v primerjavi z enimi izmed najbogatejših prebivalcev na svetu.
-
-```{r graf.novhdi1, fig.align='center'}
-graf.novhdi1
-```
-
-Graf prikazuje rast novega indeksa v najbolj razvitih državah po starem indeksu ter v Sloveniji in v Združenih državah Amerike. Padec nikjer ni bil velik, iz česar lahko sklepamo, da vse te države ohranjajo stabilne politike kar se tiče neenakosti, ekologije in ukrepov proti COVIDU-19. To so torej države, ki z ozirom na človekov razvoj v prihodnosti upoštevajo tudi druge spremenljivke poleg dohodka, zdravstva in izobrazbe.
-Najbolj izstopajo Združene države Amerike - v tej državi je indeks padel največ in najnižje, celo pod vrednost 0,75.
-
-```{r graf.novhdi2, fig.align='center'}
-graf.novhdi3
-```
-
-Čeprav imajo prikazane države svoj indeks človekovega razvoja višji od vseh ostalih držav, so vseeno razlogi za padec HDI-ja različni. Sloveniji, Švici in Združenim državam Amerike nizek indeks COVID zelo zmanjšuje novi HDI. **Slovenija** ima izmed prikazanih držav najnižjega in se zato niti ne more primerjati z Norveško, Irsko, Nemčijo in Avstralijo.
-**ZDA** pa imajo poleg indeksa COVID od vseh ostalih držav nižja tudi indeksa neenakosti in izpusta CO2. Razlika je zelo očitna in kaže na veliko večjo neenakost in ekološki odtis v ZDA kot pa v drugih podobno razvitih državah.
+Na grafu vidimo, da državam najbolj zmanjšuje indeks visoko število primerov koronavirusa, zaradi česar je nižji indeks COVID. Ker te države spadajo med bolj razvite, z grafa o povezavi med prihodkom in izpustom CO2 sklepamo, da novi indeks človekovega razvoja zmanjšujejo tudi visoki izpusti ogljikovega dioksida (nižji ekološki indeks).
 
 # Shiny
 Kot zaključek pa lahko bralec še uporabi aplikacijo, v kateri sam izbere državo in pogleda njen **indeks razvoja po letih**, **primerjavo** med starim in novo izračunanim HDI-jem, v tretjem zavihku pa še **napoved za rast indeksa** do leta 2025, izračunano z metodo najmanjših kvadratov.

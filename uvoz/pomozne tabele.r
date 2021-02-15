@@ -10,11 +10,6 @@ leto2000 <- HDI_drzave_leta %>%
 tabela3 <- leto2000 %>% arrange(desc(Stevilo)) %>% slice(1:5) 
 max.drzave2000 <- as.vector(tabela3$Drzava)
 
-# tabela za države leta 2018
-leto2018 <- HDI_drzave_leta %>% 
-  filter(Leto == 2018) %>%
-  select(-"Leto")
-
 # Novi HDI
 ## tabela za povezavo med dohodkom in ekološkim indeksom
 priheko <- nov.hdi.tidy %>% 
@@ -26,15 +21,9 @@ priheko$"Indeks_izpusta_CO2" <- 1 - priheko$"Ekoloski_indeks"
 priheko <- priheko %>% select(-"Ekoloski_indeks")
 
 ## največji padec
-maxpadec <- tabela1 %>% arrange(desc(Padec_HDI)) %>% slice(1:10)
+maxpadec <- tabela1 %>% 
+  filter(Padec_HDI >= 0.1)
 
 maxpadec1 <- left_join(maxpadec, nov.hdi) %>% 
   select(-"Padec_HDI") %>%
   pivot_longer(c(-Drzava), names_to="Indeks", values_to="Vrednost")
-
-## drzave z najvišjim indeksom
-tabela5 <- leto2018 %>% arrange(desc(Stevilo)) %>% 
-  slice(1:6) %>%
-  filter(Drzava != "Hong Kong, China")
-
-max.drzave2018 <- as.vector(tabela5$Drzava)
