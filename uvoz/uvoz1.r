@@ -148,10 +148,10 @@ nov.hdi$"Stari_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivlj
 nov.hdi$"Novi_HDI" <- round((nov.hdi$`Indeks_izobrazbe` * nov.hdi$`Indeks_zivljenja` * nov.hdi$`Indeks_prihodka` * nov.hdi$`Indeks_neenakosti` * nov.hdi$`Ekoloski_indeks` * nov.hdi$`Indeks_COVID`) ** (1/6), digits = 3)
 
 ### Popravimo, kjer je za isto državo več vrstic 
-### Filtriramo glede na Indeks_neenakosti, kar sicer povzroči izbris držav, ki tega podatka nimajo, iz tabele, vendar bomo v nadaljevanju tako ali tako analizirali le tiste države, ki imajo vse podatke
+### Filtriramo glede na novi HDI, kar sicer povzroči izbris držav, ki tega podatka nimajo, vendar bomo v nadaljevanju tako ali tako analizirali le tiste države, ki imajo vse podatke
 nov.hdi <- nov.hdi %>% 
   group_by(Drzava) %>% 
-  filter(Indeks_neenakosti == max(Indeks_neenakosti)) %>% 
+  filter(Novi_HDI == max(Novi_HDI)) %>% 
   distinct
 
 ## 9. tabela (Tabelo nov.hdi prečistimo in spravimo v tidy data)

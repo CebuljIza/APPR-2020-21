@@ -10,6 +10,11 @@ leto2000 <- HDI_drzave_leta %>%
 tabela3 <- leto2000 %>% arrange(desc(Stevilo)) %>% slice(1:5) 
 max.drzave2000 <- as.vector(tabela3$Drzava)
 
+# tabela za države leta 2018, za zemljevid
+leto2018 <- HDI_drzave_leta %>% 
+  filter(Leto == 2018) %>%
+  select(-"Leto")
+
 # Novi HDI
 ## tabela za povezavo med dohodkom in ekološkim indeksom
 priheko <- nov.hdi.tidy %>% 

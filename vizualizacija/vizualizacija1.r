@@ -92,29 +92,3 @@ graf.maxpadec2 <- maxpadec1 %>%
   theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
 
 graf.maxpadec3 <- graf.maxpadec2 %>% ggplotly()
-
-graf.novhdi <- nov.hdi.tidy %>%
-  filter(Drzava %in% c("Slovenia", "United States", max.drzave2018),
-         Indeks %in% c("Stari_HDI", "Novi_HDI")) %>%
-  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
-  geom_col(position="dodge") +
-  labs(title="Stari in novi indeks") +
-  ylab("Vrednost") +
-  xlab("Država") + 
-  theme_minimal() +
-  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
-
-graf.novhdi1 <- graf.novhdi %>% ggplotly()
-
-graf.novhdi2 <- nov.hdi.tidy %>%
-  filter(Drzava %in% c("Slovenia", "United States", max.drzave2018),
-         Indeks %in% c("Indeks_neenakosti", "Ekoloski_indeks", "Indeks_COVID")) %>%
-  ggplot(aes(x=Drzava, y=Vrednost, fill=Indeks)) +
-  geom_col(position="dodge") +
-  labs(title="Razlogi za padec indeksa") +
-  ylab("Vrednost") +
-  xlab("Država") + 
-  theme_minimal() +
-  theme(axis.text.x=element_text(angle=45, size=10, vjust=0.5))
-
-graf.novhdi3 <- graf.novhdi2 %>% ggplotly()
