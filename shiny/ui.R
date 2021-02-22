@@ -15,7 +15,7 @@ shinyUI(fluidPage(
                       sidebarPanel(
                         selectInput(inputId = "drzava2",
                                     label = "Izberi državo",
-                                    choices = unique(HDI_drzave_leta$Drzava))),
+                                    choices = unique(nov.hdi.tidy$Drzava))),
                       mainPanel(plotOutput("drzava2"))),
              
              tabPanel("Napoved",
